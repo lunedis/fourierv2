@@ -200,11 +200,11 @@ Tinytest.add 'desc T3D', (test) ->
   speed = stats.propulsion
   roughly test, speed.tank.ehp, 6319, 1
   roughly test, speed.navigation[1].speed, 2344, 1
-  roughly test, speed.damage.turret.optimal, 46778, 1
+  roughly test, speed.damage.turret.optimal, 45416, 1
 
   ss = stats.sharpshooter
   roughly test, ss.navigation[1].sig, 419, 1
-  roughly test, ss.damage.turret.optimal, 77964, 1
+  roughly test, ss.damage.turret.optimal, 75693, 1
 
 Tinytest.add 'desc fleet drones', (test) ->
   arbitrator = """[Arbitrator, Med Mobile Armor]

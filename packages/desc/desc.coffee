@@ -82,6 +82,10 @@ class DescFitting
       defense: 35676
       propulsion: 35677
       sharpshooter: 35678 
+    35683: # Hecate
+      defense: 35686
+      propulsion: 35687
+      sharpshooter: 35688
 
   setShip: (s) ->
     @ship = s if @dogmaContext.setShip(s)
@@ -165,7 +169,7 @@ class DescFitting
     if @MODES[@ship]?
       modeStats = []
       for mode, id of @MODES[@ship]
-        key = @dogmaContext.addModule id
+        key = @dogmaContext.addModuleS id, DOGMA.STATE_Online
         stats = @_getRawStats()
         @dogmaContext.removeModule key
         modeStats[mode] = stats
