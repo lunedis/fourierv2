@@ -5,7 +5,6 @@
 # but you can also edit it by hand.
 
 meteor-base             # Packages every Meteor app needs to have
-mobile-experience       # Packages for a great mobile UX
 mongo                   # The database Meteor supports right now
 blaze-html-templates    # Compile .html files into Meteor Blaze views
 session                 # Client-side reactive dictionary for your app
@@ -20,3 +19,15 @@ coffeescript
 desc
 desc-loadoutdisplay
 underscore
+huttonr:bootstrap3
+aldeed:autoform
+aldeed:collection2
+iron:router
+maazalik:highcharts
+chuangbo:marked
+browser-policy
+accounts-password
+audit-argument-checks
+check
+ian:accounts-ui-bootstrap-3
+manuelschoebel:ms-seo

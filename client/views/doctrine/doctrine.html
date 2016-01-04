@@ -1,0 +1,209 @@
+<template name="doctrine">
+<div class="row">
+<div class="col-md-10 col-md-offset-1">
+<div class="page-header">
+	<h1>
+		{{name}} <small> {{links}}</small>
+		{{#if currentUser}}
+			<a href="/editDoctrine/{{_id}}" class="btn btn-default">
+				<i class="glyphicon glyphicon-pencil"></i>
+				Edit
+			</a>
+		{{/if}}
+	</h1>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<img class="img-rounded pull-right" style="height:150px; width:150px" src="/img/{{slug}}.png">
+		{{#markdown}}{{description}}{{/markdown}}
+	</div>
+</div>
+{{>fitnav roles}}
+<h2>Fittings</h2>
+{{#each roles}}
+	<h3 id="{{role}}">{{role}}</h3>
+	{{#each fits}}
+		{{>fit}}
+	{{/each}}
+{{/each}}
+
+{{#if currentUser}}
+	<div class="row">
+		<div class="col-md-8 col-md-offset-1">
+			<div class="panel panel-default addFittingPanel">
+				<div class="panel-heading">
+					<h3 class="panel-title">Add new Fitting</h3>
+				</div>
+				<div class="panel-body">
+					{{> quickForm id="addFittingForm" doc=fromDoctrine schema=AddFittingsSchema type="method" meteormethod="addFitting"}}
+				</div>
+			</div>
+		</div>
+	</div>
+{{/if}}
+</div>
+</div>
+</template>
+
+<template name="fitnav">
+<div class="row" style="margin-top: 20px;">
+	{{#each this}}
+	<div class="col-md-4">
+		<nav class="fit-nav">
+			<ul class="nav">
+				<li class="role">
+					<a href="#{{role}}">{{role}}</a>
+					<ul class="nav">
+					{{#each fits}}
+						<li class="fit">
+							<a href="#fit{{_id}}">{{shipTypeName}} - {{name}}</a>
+						</li>
+					{{/each}}
+					</ul>
+				</li>
+			</ul>
+		</nav>
+	</div>
+	{{/each}}
+</div>
+</template>
+
+<template name="fit">
+<div class="row fit" id="fit{{_id}}">
+	<div class="col-sm-3">
+		<img class="center-block img-rounded img-thumbnail img-fit" src="http://image.eveonline.com/Render/{{shipTypeID}}_128.png"/>
+		<p class="text-center">
+			<span class="label {{roleLabelColor}}">{{role}}</span>
+		</p>
+		{{#if currentUser}}
+			<p class="text-center">
+				<a href="/editFitting/{{_id}}" class="btn btn-default">
+					<i class="glyphicon glyphicon-pencil"></i>
+					Edit
+				</a>
+			</p>
+			<p class="text-center">
+				<button class="btn btn-warning delete">
+					<i class="glyphicon glyphicon-pencil"></i>
+					Delete
+				</button>
+			</p>
+		{{/if}}
+	</div>
+	<div class="col-sm-9">
+		<h3>{{shipTypeName}} <small>{{name}}</small></h3>
+		<div class="tabpanel">
+			<ul class="nav nav-tabs" role="tablist">
+				{{>tab id=_id href="info" icon="info-sign" title="Info" class="active"}}
+				{{>tab id=_id href="stats" icon="signal" title="Stats"}}
+				{{>tab id=_id href="tips" icon="question-sign" title="Tips"}}
+				{{>tab id=_id href="fittingdoctor" icon="cog" title="Fitting Doctor"}}
+				{{>tab id=_id href="eft" icon="list" title="EFT"}}
+			</ul>
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="info{{_id}}">
+					<p>{{#markdown}}{{#ifEmpty description}}*not available*{{/ifEmpty}}{{/markdown}}</p>
+					<p>
+						Priority: <span class="label {{difficultyLabelColor}}">{{#ifEmpty priority}}
+							unknown
+						{{/ifEmpty}}
+						</span>
+					</p>
+					<p>
+						Count: <span class="label label-default">{{#ifEmpty count}}
+							unknown
+						{{/ifEmpty}}
+						</span>
+					</p>
+					{{#with loadout}}
+						{{>loadout}}
+					{{/with}}
+				</div>
+				<div role="tabpanel" class="tab-pane" id="stats{{_id}}">
+					{{>stats}}
+				</div>
+				<div role="tabpanel" class="tab-pane" id="tips{{_id}}">
+					{{>tips}}	
+				</div>
+				<div role="tabpanel" class="tab-pane" id="fittingdoctor{{_id}}">
+					{{>fittingDoctor}}
+				</div>
+				<div role="tabpanel" class="tab-pane" id="eft{{_id}}">
+					{{>eft}}
+					<pre class="eft">{{>dna}}</pre>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</template>
+
+<template name="tab">
+<li role="presentation" class="{{class}}"><a href="#{{href}}{{id}}" aria-controls="{{href}}{{id}}" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-{{icon}}" aria-hidden="true"></span> {{title}}</a></li>
+</template>
+
+<template name="stats">
+<table class="table table-bordered table-striped">
+<tbody>
+	<tr>
+		<td><img src="img/ehp.png" class="statsIcon" alt="Suitcase"/> EHP:</td>
+		<td>{{formatNumber stats.tank.ehp}}</td>
+	</tr>
+	<tr>
+		<td>
+			<img src="img/speed.png" class="statsIcon" alt="Propulsion Module"/> Speed / Sig:
+		</td>
+		<td>
+		{{#each stats.navigation}}
+			{{formatNumber speed}} m/s
+			({{formatNumber sig}} m)<br/>
+		{{/each}}
+		</td>
+	</tr>
+	<tr>
+		<td><img src="img/dps.png" class="statsIcon" alt="Doomsday Device"/> DPS:</td>
+		<td>{{formatNumber stats.damage.total}}</td>
+	</tr>
+	<tr>
+		<td><img src="img/range.png" class="statsIconSmall" alt="Range"/> &nbsp;Range:</td>
+		<td>
+		{{#with stats.damage}}
+			{{#if turret}}
+				{{formatNumberK turret.optimal}}+{{formatNumberK turret.falloff}} km
+			{{/if}}
+			{{#if sentries}}
+				{{formatNumberK sentries.optimal}}+{{formatNumberK sentries.falloff}} km
+			{{/if}}
+			{{#if missile}}
+				&lt;{{formatNumberK missile.range}} km
+			{{/if}}
+		{{/with}}
+		</td>
+	</tr>
+	{{#with stats.damage}}
+		{{#if drones}}
+		<tr>
+			<td></td>
+			<td>{{formatNumber drones.range}}k drone control range</td>
+		</tr>
+		{{/if}}
+	{{/with}}
+</tbody>
+</table>		
+</template>
+
+<template name="tips">
+{{#markdown}}{{#ifEmpty tips}}*not available*{{/ifEmpty}}{{/markdown}}	 
+</template>
+
+<template name="fittingDoctor">
+{{#markdown}}{{#ifEmpty fittingDoctor}}*not available*{{/ifEmpty}}{{/markdown}}	 
+</template>
+
+<template name="ifEmpty">
+	{{#if this}}{{this}}{{else}}{{> Template.contentBlock}}{{/if}}
+</template>
+
+<template name="dna">
+{{shipTypeID}}{{#with loadout}}{{#each subs}}:{{typeID}}{{/each}}{{#each highs}}:{{typeID}};1{{/each}}{{#each mids}}:{{typeID}};1{{/each}}{{#each lows}}:{{typeID}};1{{/each}}{{#each rigs}}:{{typeID}};1{{/each}}{{#each drones}}:{{typeID}};{{quantity}}{{/each}}{{#each charges}}:{{typeID}};{{quantity}}{{/each}}{{/with}}
+</template>

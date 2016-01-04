@@ -1,0 +1,142 @@
+/* affix */
+body {
+	position:relative;
+}
+
+.affix {
+	top: 20px;
+	width:263px;
+}
+
+.tab-pane {
+	border-color: #1c1e22 !important;
+	border-width: 0 1px 1px 1px;
+}
+
+
+/* Navigation */
+.fit-nav li a {
+	padding: 2px 15px;
+}
+
+.fit-nav li.role > a {
+	font-size: large;
+}
+
+.fit-nav li.role > a i {
+	visibility:hidden;
+}
+
+.fit-nav li.role.active > a i {
+	visibility: visible;
+}
+
+.fit-nav li.fit {
+	margin-left: 15px;
+}
+
+.fit-nav li.fit > a i {
+	visibility:hidden;
+}
+
+.fit-nav li.fit.active > a i {
+	visibility: visible;
+}
+
+/* Fit display */
+div.fit {
+	margin-top: 20px;
+}
+
+.img-fit {
+	margin-top: 25px;
+	margin-bottom: 10px;
+
+}
+
+/* Stats */
+.statsIcon {
+	height: 38px;
+	width: 38px;
+}
+.statsIconSmall {
+	height: 32px;
+	width: 32px;
+}
+.tab-pane {
+	padding: 10px;
+	border: 1px solid #000000;
+	border-top-width: 0;
+	border-radius: 0 0 4px 4px;
+}
+
+/* Loadout display */
+.loadout {
+	border: 1px solid #000000;
+	border-radius: 4px;
+	margin: 20px 48px 0 48px;
+}
+.loadout .h3 {
+	color: #FFFFFF;
+	padding: 5px 0 5px 0;
+	margin: 0px;
+	border-bottom: 1px solid #000000;
+}
+.loadout .h3:hover {
+	background: #3e444c;
+}
+.racks {
+	padding: 10px 10px 10px 10px;
+}
+.rack {
+	margin: 0 0 1px 0;
+}
+.rack span.rackName {
+	text-align: center;
+	font-size: small;
+	display: inline-block;
+	width: 48px;
+	border: 1px solid #000000;
+	transform: rotate(270deg);
+	margin: 0 -17px 0 -14px;
+}
+.rack.small span.rackName {
+	font-size: x-small;
+	width:32px;
+	margin: 0 -10px 0 -4px;
+}
+div.module {
+	position: relative;
+	display:inline-block;
+}
+.rack .moduleImage {
+	display: inline-block;
+	border: 1px solid #000000;
+	height: 48px;
+	width: 48px;
+	margin: 0 1px 0 0;
+}
+.rack.small .moduleImage {
+	width:32px;
+	height:32px;
+}
+.rack img.charge {
+	position: absolute;
+	background: rgba(50,50,50,0.5);
+	border: 1px solid #000000;
+	height: 24px;
+	width: 24px;
+	bottom: 0px;
+	right: 1px;
+}
+.rack.small span.quantity {
+	position: absolute;
+	font-size: x-small;
+	bottom:0px;
+	right:4px;
+}
+
+/* Add new Fit form */
+.addFittingPanel {
+	margin-top: 40px;
+}

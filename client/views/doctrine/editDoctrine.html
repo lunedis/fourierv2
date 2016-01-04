@@ -1,0 +1,5 @@
+<template name="editDoctrine">
+	<a href="/{{doctrine}}" role="button" class="btn btn-info"><span class="glyphicon glyphicon-arrow-left"></span> Back to Doctrine</a>
+	<h3>Edit Doctrine</h3>
+	{{> quickForm id="editDoctrineForm" doc=this collection="Doctrines" schema=UpdateDoctrineSchema  type="update"}}
+</template>
