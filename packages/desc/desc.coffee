@@ -367,7 +367,8 @@ class DescFitting
 
       unless result.armor?
         result.armor = {}
-        result.armor.range = eA.range
+        result.armor.optimal = eA.range
+        result.armor.falloff = eA.falloff
         result.armor.rr = 0
 
       result.armor.rr += amount / eA.duration
@@ -378,7 +379,8 @@ class DescFitting
 
       unless result.shield?
         result.shield = {}
-        result.shield.range = eA.range
+        result.shield.optimal = eA.range
+        result.shield.falloff = eA.falloff
         result.shield.rr = 0
 
       result.shield.rr += amount / eA.duration

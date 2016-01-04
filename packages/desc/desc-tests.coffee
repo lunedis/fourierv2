@@ -123,7 +123,7 @@ Tinytest.add 'desc drones', (test) ->
   test.equal fit.drones.inSpace.length, 1
   
   stats = fit.getDamage()
-  roughly test, stats.drone.dps, 614, 1
+  roughly test, stats.drone.dps, 590, 1
   test.equal stats.drone.range, 60000
   roughly test, stats.drone.speed, 2846, 1
 
@@ -243,7 +243,7 @@ Tinytest.add 'desc fleet drones', (test) ->
   roughly test, stats.tank.ehp, 41227, 1
   roughly test, stats.navigation[1].speed, 1651.3, 1e-1
   roughly test, stats.navigation[1].sig, 523, 1
-  roughly test, stats.damage.drone.dps, 307, 1
+  roughly test, stats.damage.drone.dps, 295, 1
   roughly test, stats.damage.drone.speed, 5654, 1
 
 Tinytest.add 'desc turret', (test) ->
@@ -293,8 +293,9 @@ Tinytest.add 'desc outgoing', (test) ->
   fit.addModule TYPE_LARGEREMOTESHIELDBOOSTERII
 
   outgoingStats = fit.getOutgoing()
-  roughly test, outgoingStats.shield.rr, 85.3, 0.1
-  roughly test, outgoingStats.shield.range, 71400, 100
+  roughly test, outgoingStats.shield.rr, 85, 1
+  roughly test, outgoingStats.shield.optimal, 32200, 100
+  roughly test, outgoingStats.shield.falloff, 48000, 100
 
 Tinytest.add 'desc empty racks', (test) ->
   hyena = """[Hyena, Talwarfleet]
