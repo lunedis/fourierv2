@@ -1,6 +1,5 @@
-Meteor.publish 'doctrines',(group) ->
-  check(group, String)
-  Doctrines.find({group: group})
+Meteor.publish 'doctrines', ->
+  Doctrines.find({})
 
 Meteor.publish 'fittings', ->
   Fittings.find()

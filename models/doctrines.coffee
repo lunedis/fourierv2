@@ -13,14 +13,6 @@ BasicDoctrineSchema = new SimpleSchema
     type: "String"
     label: "Category"
     max: 100
-  group:
-    type: String
-    label: "Group"
-    max: 50
-    autoform:
-      label: false
-      afFieldInput:
-        type: 'hidden'
   description:
     type: String
     label: "Description"

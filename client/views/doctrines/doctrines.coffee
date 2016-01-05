@@ -7,5 +7,3 @@ Template.doctrines.helpers
       result.push {"category": key, "doctrines": value}
 
     return _.sortBy result, 'category'
-  default: ->
-    return {group: Session.get('subdomain')}

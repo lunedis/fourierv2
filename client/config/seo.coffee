@@ -1,4 +1,4 @@
-# SEO.config
-#  title: 'TEDDIE',
-#  meta: 
-#    description: 'Tool for Enhanced Doctrine Display and Information Emphasis'
+ SEO.config
+  title: 'TEDDIE',
+  meta: 
+    description: 'Tool for Enhanced Doctrine Display and Information Emphasis'
