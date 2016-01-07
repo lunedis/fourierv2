@@ -297,6 +297,32 @@ Tinytest.add 'desc outgoing', (test) ->
   roughly test, outgoingStats.shield.optimal, 32200, 100
   roughly test, outgoingStats.shield.falloff, 48000, 100
 
+Tinytest.add 'desc rr', (test) ->
+  basi = """[Basilisk, MiG]
+Reactor Control Unit II
+Damage Control II
+
+100MN Afterburner II
+Large Shield Extender II
+Adaptive Invulnerability Field II
+Adaptive Invulnerability Field II
+EM Ward Field II
+
+Large 'Regard' Remote Capacitor Transmitter
+Large S95a Scoped Remote Shield Booster
+Large S95a Scoped Remote Shield Booster
+Large S95a Scoped Remote Shield Booster
+Pithum C-Type Medium Remote Shield Booster
+Pithum C-Type Medium Remote Shield Booster
+
+Medium Core Defense Field Extender II
+Medium Ancillary Current Router II
+
+Light Shield Maintenance Bot II x5
+"""
+  fit = Desc.FromEFT(basi);
+  roughly test, fit.getStats().outgoing.shield.rr, 332, 1
+
 Tinytest.add 'desc empty racks', (test) ->
   hyena = """[Hyena, Talwarfleet]
 
