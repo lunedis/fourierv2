@@ -1,4 +1,4 @@
  SEO.config
-  title: 'TEDDIE',
+  title: 'FOURIERv2',
   meta: 
-    description: 'Tool for Enhanced Doctrine Display and Information Emphasis'
+    description: 'Fleet Fitting Tool'

@@ -1,0 +1,20 @@
+<template name="panelHeader">
+<div class="panel-heading">
+		{{> Template.contentBlock}}
+		{{doctrineName}}: {{title}}
+		<span class="glyphicon glyphicon-cog pull-right settings">
+			<div class="popover left hidden" role="tooltip">
+				<div class="arrow" style="top: 44px;"></div>
+				<h3 class="popover-title">Settings</h3>
+				<div class="popover-content">
+					{{>Template.elseBlock}}
+					<p class="text-center">
+						<button class="btn btn-warning delete btn-sm">
+							<span class="glyphicon glyphicon-remove-circle"></span> Delete
+						</button>
+					</p>
+				</div>
+			</div>
+		</span>
+	</div>
+</template>

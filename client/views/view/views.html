@@ -1,0 +1,12 @@
+<template name="views">
+<table class="table">
+	<tr>
+		<th>Name</th>
+	</tr>
+	{{#each this}}
+		<tr>
+			<td><a href="/view/{{_id}}">{{title}}</a></td>
+		</tr>
+	{{/each}}
+</table>
+</template>

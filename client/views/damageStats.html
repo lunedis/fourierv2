@@ -1,0 +1,25 @@
+<template name="damageStats">
+	{{#each damageTypes}}
+	{{> UI.dynamic template=type data=this}}
+	{{/each}}
+</template>
+
+<template name="damageStatsTurret">
+	{{formatNumber dps}} turret DPS @ {{formatNumberK optimal}}+{{formatNumberK falloff}} with {{formatNumber tracking 3}} ({{signatureResolution}}m)<br/>
+</template>
+
+<template name="damageStatsMissile">
+	{{formatNumber dps}} missile DPS @ {{formatNumberK range 1}} ({{formatNumber explosionRadius}}m / {{formatNumber explosionVelocity}} m/s / {{formatNumber drf 1}})<br/>
+</template>
+
+<template name="damageStatsDrone">
+	{{formatNumber dps}} drone DPS @ {{formatNumberK range}}k ({{formatNumber speed}} m/s)<br/>
+</template>
+
+<template name="damageStatsSentry">
+	{{formatNumber dps}} sentry DPS @ {{formatNumberK optimal}}+{{formatNumberK falloff}} with {{formatNumber tracking 3}} ({{signatureResolution}}m)<br/>
+</template>
+
+<template name="damageStatsSmartbomb">
+
+</template>

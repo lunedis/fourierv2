@@ -1,0 +1,13 @@
+<template name="doctrineChoose">
+<form class="form-inline doctrineChoose">
+  <div class="form-group">
+    <select class="form-control input-sm doctrineChoose" name="doctrine" value="{{doctrine}}">
+    	{{#each doctrines}}
+    		<option value="{{_id}}" {{selected}}>
+    			{{name}} ({{links}})
+    		</option>
+    	{{/each}}
+    </select>
+  </div>
+</form>
+</template>

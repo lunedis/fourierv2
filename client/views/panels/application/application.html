@@ -1,0 +1,38 @@
+<template name="application">
+	<div class="panel panel-danger">
+		{{#panelHeader}}
+			<span class="glyphicon glyphicon-stats" aria-hidden="true"></span> 
+		{{else}}
+			{{> standardSettings}}
+			{{> staticY}}
+			{{> fittingSelect}}
+		{{/panelHeader}}
+		<div class="panel-body">
+			<p>
+				<form class="form-inline">
+					<div class="form-group">
+						<label for="speed">Speed: </label> 
+						<input type="text" class="form-control input-sm speed" value="{{noDecimals data.targetNavigation.speed}}" size="5">
+					</div>
+					<div class="form-group">
+						<label for="sig">Sig: </label> 
+						<input type="text" class="form-control input-sm sig" value="{{noDecimals data.targetNavigation.sig}}" size="6">
+					</div>
+					<div class="form-group">
+						<label for="preset">Load preset: </label>
+						<select class="form-control input-sm preset" name="preset" value="">
+							<option value=""></option>
+						{{#each TargetPresets}}
+							<option value="{{_id}}">{{name}} ({{formatNumber speed}}/{{formatNumber sig}})</option>
+						{{/each}}
+						</select>
+					</div>
+				</form>
+			</p>
+			<p>
+				{{>ewar}}
+			</p>
+		</div>
+		<div class="dmgApplication" style="height: 500px; width:100%"></div>
+	</div>
+</template>

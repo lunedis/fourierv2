@@ -1,0 +1,12 @@
+<template name="fittingSelect">
+<ul class="list-unstyled">
+{{#each fittings}}
+	<li>
+		<label class="visibleCheck">
+			<input type="checkbox" {{visible}} />
+			{{shipTypeName}} ({{name}})
+		</label>
+	</li>
+{{/each}}
+</ul>
+</template>

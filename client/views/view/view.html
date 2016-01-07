@@ -1,0 +1,66 @@
+<template name="view">
+<h2>{{title}}</h2>
+{{#each layout}}
+  {{> UI.dynamic template=rowTemplate data=this}}
+{{/each}}
+
+<p class="text-center"><button class="btn btn-default full"><span class="glyphicon glyphicon-fullscreen"> Full</span></button> <button class="btn btn-default split"><span class="glyphicon glyphicon-sound-stereo"> Split</span></button></p>
+</template>
+
+<template name="fullRow">
+{{#with panel}}
+  {{> UI.dynamic template=type data=this}}
+{{/with}}
+</template>
+
+<template name="splitRow">
+<div class="row">
+  <div class="col-lg-6">
+    {{#with leftPanel}}
+      {{> UI.dynamic template=type data=this}}
+    {{/with}}
+  </div>
+  <div class="col-lg-6">
+    {{#with rightPanel}}
+      {{> UI.dynamic template=type data=this}}
+    {{/with}}
+  </div>
+</div>
+</template>
+
+<template name="newPanel">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <span class="glyphicon glyphicon-plus-sign"></span> New Panel
+  </div>
+  <div class="panel-body">
+    <form class="newPanel">
+      <div class="form-group">
+        <label for="title">Title: </label> 
+        <input type="text" name="title" class="form-control input-sm title">
+      </div>
+      <div class="form-group">
+        <label for="doctrine">Doctrine: </label> 
+        <select name="doctrine" class="form-control input-sm doctrine">
+          {{#each doctrines}}
+            <option value="{{_id}}" {{selected}}>
+              {{name}} ({{links}})
+            </option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="type">Type: </label> 
+        <select name="type" class="form-control input-sm type">
+          {{#each types}}
+            <option value="{{this}}" {{selected}}>
+              {{this}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+      <input type="submit" class="btn btn-info btn-sm" value="Create"/>
+    </form>
+  </div>
+</div>
+</template>

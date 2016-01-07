@@ -1,0 +1,85 @@
+<template name="tankStats">
+	<div class="panel panel-info" style="position:relative;">
+	{{#panelHeader}}
+		<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+	{{else}}
+		{{> standardSettings}}
+		{{>fittingCountSelect}}
+	{{/panelHeader}}
+	{{#with fittingsWithTank}}
+		{{>tankStatsTable}}
+		<div class="panel-footer">
+			<div class="row">
+				<div class="col-md-3 col-xs-6">TotalRep: 
+					{{#if greaterZero totalRep}}
+						<b>{{formatNumber totalRep}}</b>
+					{{else}}
+						<i>unavailable</i>
+					{{/if}}
+				</div>
+				<div class="col-md-3 col-xs-6">Minimum EHP: 
+					{{#minimum minEHP}}
+						<b>{{formatNumber minEHP.value}}</b>
+					{{/minimum}}
+				</div>
+					<div class="col-md-3 col-xs-6">Minimum Tank: 	{{#minimum minTank}}
+						<b>{{formatNumber minTank.value}}</b>
+					{{/minimum}}
+				</div>
+				<div class="col-md-3 col-xs-6">Minimum TTL:
+					{{#minimum minTTL}}
+						<b>{{formatNumber minTTL.value 2}}</b>s
+					{{/minimum}}</div>
+			</div>
+		</div>
+	{{/with}}
+	</div>
+</template>
+
+<template name="tankStatsTable">
+<table class="table table-condensed table-bordered table-striped">
+<thead>
+	<tr>
+		<th style="width: 58px;"></th>
+		<th>Ship</th>
+		<th>
+			EHP<br/>
+			Tank EHP
+		</th>
+		<th>
+			Resi<br/>
+			Rep
+		</th>
+		<th>
+			Tank<br/>
+			Time to kill
+		</th>
+		<th>Count</th>
+		<th style="width: 35px;"></th>
+	</tr>
+</thead>
+<tbody>
+{{#each fittings}} 
+	<tr>
+		<td><img style="height: 48px; width: 48px;" src="http://image.eveonline.com/Type/{{shipTypeID}}_64.png"/></td>
+		<td><b>{{shipTypeName}}</b><br/>
+		{{name}}</td>
+		<td>{{formatNumber stats.tank.ehp}}<br/>
+		{{tankattr stats.tank 'ehp'}}</td>
+		<td>{{tankattr stats.tank 'resi' 2}}<br/>
+		{{outgoingattr stats.outgoing 'rr' 2}}</td>
+		<td>{{formatNumber tank 2}}<br/>
+		{{formatNumber ttl 2}}</td>
+		<td>{{count}}</td>
+		<td>
+			{{> countButtons}}
+		</td>
+	</tr>	
+{{/each}}
+</tbody>
+</table>
+</template>
+
+<template name="fourierIcon">
+	<img class="fourierIcon hidden-sm hidden-xs" src="/img/fourier/{{tanktype}}{{path}}.png"/>
+</template>

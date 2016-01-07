@@ -1,0 +1,31 @@
+<template name="mitigation">
+<div class="panel panel-success">
+	{{#panelHeader}}
+		<span class="glyphicon glyphicon-stats" aria-hidden="true"></span> 
+	{{else}}
+		{{> standardSettings}}
+		{{> staticY}}
+		{{>fittingSelect}}
+	{{/panelHeader}}
+	<div class="panel-body">
+		<p>
+			<form class="form-inline">
+				{{>damageStats data.attackerDamageStats}}
+				<div class="form-group">
+					<label for="preset">Load preset: </label>
+					<select class="form-control input-sm preset" name="preset" value="">
+						<option value=""></option>
+					{{#each AttackerPresets}}
+						<option value="{{_id}}">{{name}}</option>
+					{{/each}}
+					</select>
+				</div>
+			</form>
+		</p>
+		<p>
+			{{>ewar}}
+		</p>
+	</div>
+	<div id="dmgMitigation{{_id}}" style="height: 500px; width: 100%"></div>	
+</div>
+</template>

@@ -1,0 +1,110 @@
+<template name="overview">
+	<div class="panel panel-primary" style="position:relative;">
+	{{#panelHeader}}
+		<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+	{{else}}
+		{{> standardSettings}}
+		{{>fittingCountSelect}}
+	{{/panelHeader}}
+	{{#with fittings}}
+		{{>overviewTable}}
+		<div class="panel-footer">
+			<div class="row">
+				<div class="col-md-4">Total DPS: 
+					{{#if greaterZero totalDPS}}
+						<b>{{formatNumber totalDPS}}</b>
+					{{else}}
+						<i>unavailable</i>
+					{{/if}}
+					<br/>
+					Total Count: {{sumCount}} 
+				</div>
+				<div class="col-md-4">Minimum EHP: 
+					{{#minimum minEHP}}
+						<b>{{formatNumber minEHP.value}}</b>
+					{{/minimum}}
+				</div>
+				<div class="col-md-4">Minimum Speed: 
+					{{#minimum minSpeed}}
+						<b>{{formatNumber minSpeed.value}}</b>
+					{{/minimum}}
+				</div>
+			</div>
+		</div>
+	{{/with}}
+	</div>
+</template>
+
+<template name="overviewTable">
+<table class="table table-striped table-condensed table-bordered">
+	<thead>
+		<tr>
+			<th style="width:58px;"></th>
+			<th>Ship</th>
+			<th>{{> fourierIcon path="ehp"}} EHP</th>
+			<th>{{> fourierIcon path="speed"}} Speed / Sig</th>
+			<th>{{> fourierIcon path="dps"}} DPS</th>
+			<th>Ewar</th>
+			<th>Count</th>
+			<th style="width: 35px;"></th>
+		</tr>
+	</thead>
+	<tbody>
+{{#each fittings}} 
+	<tr>
+		<td><img style="width:48px; height; 48px" src="http://image.eveonline.com/Type/{{shipTypeID}}_64.png"/></td>
+		<td><b>{{shipTypeName}}</b> ({{name}})</td>
+		<td>{{formatNumber stats.tank.ehp}}</td>
+		<td>
+			{{#with navigation}}
+				{{formatNumber speed}} m/s / {{formatNumber sig}}m
+			{{/with}}
+		</td>
+		<td>{{>damageStats stats.damage}}</td>
+		<td>{{>ewarIcons}}</td>
+		<td>{{count}}</td>
+		<td>
+			{{> countButtons}}
+		</td>
+	</tr>	
+{{/each}}
+	</tbody>
+</table>
+</template>
+
+<template name="ewarIcons">
+{{#each stats.ewar.points}}
+	{{#ewarIcon type="point"}}
+		{{formatNumberK range}}k
+	{{/ewarIcon}}
+{{/each}}
+{{#each stats.ewar.scrams}}
+	{{#ewarIcon type="scram"}}
+		{{formatNumberK range}}k
+	{{/ewarIcon}}
+{{/each}}
+{{#each stats.ewar.webs}}
+	{{#ewarIcon type="web"}}
+		{{formatNumberK range}}k
+	{{/ewarIcon}}
+{{/each}}
+{{#each stats.ewar.tps}}
+	{{#ewarIcon type="tp"}}
+		{{percent strength}}
+	{{/ewarIcon}}
+{{/each}}
+{{#each stats.ewar.damps}}
+	{{#ewarIcon type="damp"}}
+		{{percent strength}}
+	{{/ewarIcon}}
+{{/each}}
+</template>
+
+<template name="ewarIcon">
+<div class="ewar">
+	<img src="/img/fourier/{{type}}.png" class="fourierIcon">
+	<span class="strength">
+		{{>Template.contentBlock}}
+	</span>
+</div>
+</template>

@@ -137,7 +137,8 @@ if Meteor.isServer
     delete obj.eft
     delete obj.links
     _.extend obj, parse
-    fitStats = fit.getStats()
+    obj.stats = fit.getStats()
+    console.log(obj);
     return obj
 
   Meteor.methods

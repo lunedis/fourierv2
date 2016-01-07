@@ -7,7 +7,7 @@ Router.route '/',
     Meteor.subscribe 'doctrines'
   fastRender: true
 
-Router.route '/:slug',
+Router.route '/d/:slug',
   name: 'doctrine'
   action: ->
     @render 'doctrine',
