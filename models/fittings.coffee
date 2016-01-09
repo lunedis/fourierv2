@@ -8,6 +8,9 @@ mandatoryDescriptionSchema = new SimpleSchema
   role:
     type: String
     label: "Role"
+  public:
+    type: Boolean
+    label: "Public"
 
 descriptionSchema = new SimpleSchema
   description:
@@ -137,8 +140,11 @@ if Meteor.isServer
     delete obj.eft
     delete obj.links
     _.extend obj, parse
-    obj.stats = fit.getStats()
-    console.log(obj);
+    stats = fit.getStats()
+    if stats.defense?
+      obj.stats = stats.defense
+    else
+      obj.stats = stats
     return obj
 
   Meteor.methods

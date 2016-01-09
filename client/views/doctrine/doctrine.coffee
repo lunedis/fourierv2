@@ -34,7 +34,7 @@ Template.doctrine.destroyed = ->
 Template.doctrine.helpers
   roles: ->
     fitIDs = @fittings
-    fittings = _.sortBy Fittings.find({_id: $in: fitIDs}).fetch(), 'shipTypeName'
+    fittings = _.sortBy Fittings.find({_id: {$in: fitIDs},public: true}).fetch(), 'shipTypeName'
     grouped = _.groupBy fittings, 'role'
     result = []
     _.each grouped, (value, key, list) ->

@@ -18,7 +18,10 @@ BasicDoctrineSchema = new SimpleSchema
     label: "Description"
     optional: true
     autoform:
-      rows: 5
+      rows: 10
+  public:
+    type: Boolean
+    label: "Public"
 
 AdvancedDoctrineSchema = new SimpleSchema
   links:
