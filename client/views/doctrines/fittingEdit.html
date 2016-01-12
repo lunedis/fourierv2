@@ -1,5 +1,5 @@
 <template name="editFitting">
-	<a href="/{{doctrine}}" role="button" class="btn btn-info"><span class="glyphicon glyphicon-arrow-left"></span> Back to Doctrine</a>
+	<a href="/doctrines/{{doctrine}}" role="button" class="btn btn-info"><span class="glyphicon glyphicon-arrow-left"></span> Back to Doctrine</a>
 	<h3>Edit: {{fit.shipTypeName}}</h3>
 	{{> quickForm id="editFittingForm" doc=this schema=UpdateFittingsSchema type="method-update" meteormethod="updateFitting"}}
 </template>

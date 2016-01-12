@@ -1,16 +1,16 @@
 Router.route '/',
-  name: 'doctrines'
+  name: 'teddie'
   action: ->
-    @render 'doctrines'
+    @render 'teddie'
     SEO.set title: Meteor.App.NAME + ' - Doctrines'
   waitOn: ->
     Meteor.subscribe 'doctrines'
   fastRender: true
 
 Router.route '/d/:slug',
-  name: 'doctrine'
+  name: 'd'
   action: ->
-    @render 'doctrine',
+    @render 'd',
       data: ->
         if !@ready
           return
@@ -20,25 +20,3 @@ Router.route '/d/:slug',
           return doctrine
   waitOn: ->
     [Meteor.subscribe('doctrines'), Meteor.subscribe('fittings')]
-
-Router.route 'editFitting/:_id',
-  name: 'editFitting'
-  action: ->
-    @render 'editFitting',
-      data: ->
-        if !@ready
-          return
-        Fittings.findOne _id: @params._id
-  waitOn: ->
-    [Meteor.subscribe('doctrines'), Meteor.subscribe('fittings')]
-
-Router.route 'editDoctrine/:_id',
-  name: 'editDoctrine'
-  action: ->
-    @render 'editDoctrine',
-      data: ->
-        if !@ready
-          return
-        Doctrines.findOne _id: @params._id
-  waitOn: ->
-    [Meteor.subscribe('doctrines')]

@@ -1,6 +1,6 @@
-Template.doctrines.helpers
+Template.teddie.helpers
   categories: ->
-    doctrines = Doctrines.find({},{sort: slug: 1}).fetch()
+    doctrines = Doctrines.find({public: true},{sort: slug: 1}).fetch()
     grouped = _.groupBy doctrines, 'category'
     result = []
     _.each grouped, (value, key, list) ->

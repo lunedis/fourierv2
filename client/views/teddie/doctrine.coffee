@@ -12,10 +12,10 @@
         selection.addRange(range)
 
 
-Template.doctrine.rendered = ->
+Template.d.rendered = ->
   # anchor scrolling
   hash = document.location.hash.substr(1);
-  if hash && !Template.doctrine.scrolled
+  if hash && !Template.d.scrolled
     scroller = ->
       $("html, body").stop()
 
@@ -24,14 +24,14 @@ Template.doctrine.rendered = ->
       if elem.length
         scroller().scrollTop elem.offset().top
         # Guard against scrolling again w/ reactive changes
-        Template.doctrine.scrolled = true
+        Template.d.scrolled = true
     , 0
 
-Template.doctrine.destroyed = ->
-  delete Template.doctrine.scrolled;
+Template.d.destroyed = ->
+  delete Template.d.scrolled;
 
 
-Template.doctrine.helpers
+Template.d.helpers
   roles: ->
     fitIDs = @fittings
     fittings = _.sortBy Fittings.find({_id: {$in: fitIDs},public: true}).fetch(), 'shipTypeName'
@@ -41,23 +41,7 @@ Template.doctrine.helpers
       result.push {"role": key, "fits": value}
 
     return _.sortBy result,'role'
-  AddFittingsSchema: ->
-    AddFittingsSchema
-  fromDoctrine: ->
-    return links: @links, doctrine: @_id
-
-
-Template.fit.events
-  'click .delete': ->
-    if confirm 'Are you sure?'
-      fitID = @_id
-      Fittings.remove fitID
-      slug = Router.current().params.slug
-      doctrine = Doctrines.findOne {slug: slug}
-      Doctrines.update doctrine._id,
-        $pull:
-          fittings: fitID
-
+    
 Template.fit.helpers
   difficultyLabelColor: ->
     if @priority == 'high'

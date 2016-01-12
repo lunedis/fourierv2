@@ -1,4 +1,4 @@
-<template name="doctrine">
+<template name="d">
 <div class="row">
 <div class="col-md-10 col-md-offset-1">
 <div class="page-header">
@@ -26,21 +26,6 @@
 		{{>fit}}
 	{{/each}}
 {{/each}}
-
-{{#if currentUser}}
-	<div class="row">
-		<div class="col-md-8 col-md-offset-1">
-			<div class="panel panel-default addFittingPanel">
-				<div class="panel-heading">
-					<h3 class="panel-title">Add new Fitting</h3>
-				</div>
-				<div class="panel-body">
-					{{> quickForm id="addFittingForm" doc=fromDoctrine schema=AddFittingsSchema type="method" meteormethod="addFitting"}}
-				</div>
-			</div>
-		</div>
-	</div>
-{{/if}}
 </div>
 </div>
 </template>

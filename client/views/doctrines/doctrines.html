@@ -1,37 +1,48 @@
 <template name="doctrines">
-<div class="page-header">
-	<h1>Welcome to TEDDIE</h1>
-	<h4><b>T</b>ool for <b>E</b>nhanced <b>D</b>octrine <b>D</b>isplay and <b>I</b>nformation <b>E</b>mphasis</h4>
-</div>
-
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
 {{#each categories}}
 	<h3>{{category}}</h3>
-	<div class="row">
-		{{#each doctrines}}
-			<div class="col-sm-6 col-md-4" style="margin-bottom: 50px">
-				<a href="/d/{{slug}}">
-					<img class="center-block img-rounded img-thumbnail" style="width:163px; height: 163px" src="img/{{slug}}.png">
-				</a>
-				<div class="caption">
-				<h3 class="text-center"><a href="/d/{{slug}}">{{name}}</a></h3>
-				<p class="text-center"><em>{{links}}</em></p>
-				</div>
-			</div>
-		{{/each}}
-    </div>
+	<table class="table table-condensed table-bordered table-striped">
+		<thead>
+			<tr>
+				<th style="width:58px">Img</th>
+				<th>Name</th>
+				<th>Links</th>
+				<th>Public</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each doctrines}}
+			<tr>
+				<td><a href="doctrines/{{slug}}">
+					<img style="width:48px; height: 48px" src="/img/{{slug}}.png"/>
+				</a></td>
+				<td><a href="doctrines/{{slug}}">{{name}}</a></td>
+				<td><em>{{links}}</em></td>
+				<td>{{#if public}}
+						<span class="label label-success"><i class="glyphicon glyphicon-ok"></i></span>
+					{{else}}
+						<span class="label label-danger"><i class="glyphicon glyphicon-remove"></i></span>
+					{{/if}}
+				</td>
+				<td class="text-right">
+					<a href="/doctrines/{{slug}}" class="btn btn-default">
+						Fits
+					</a>
+					<a href="/doctrines/edit/{{_id}}" class="btn btn-warning">
+						<i class="glyphicon glyphicon-pencil"></i> Edit
+					</a>
+					<button class="btn btn-danger delete">
+						<i class="glyphicon glyphicon-trash"></i> Delete
+					</button>
+				</td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
 {{/each}}
-{{#if currentUser}}
-<div class="row">
-  <div class="col-md-4 col-md-offset-4">
-    <div class="panel panel-default addDoctrinePanel">
-      <div class="panel-heading">
-        <h3 class="panel-title">Add New Doctrine</h3>
-      </div>
-      <div class="panel-body">
-        {{> quickForm id="addDoctrineForm" collection="Doctrines" type="insert"}}
-      </div>
-    </div>
-  </div>
 </div>
-{{/if}}
+</div>
 </template>
