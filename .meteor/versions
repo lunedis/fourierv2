@@ -65,6 +65,7 @@ less@2.5.1
 livedata@1.0.15
 localstorage@1.0.5
 logging@1.0.8
+lumpy-ldap@1.0.1
 maazalik:highcharts@0.4.0
 manuelschoebel:ms-seo@0.4.1
 mdg:validation-error@0.2.0
@@ -101,6 +102,7 @@ stylus@2.511.1
 templating@1.1.5
 templating-tools@1.0.0
 tracker@1.0.9
+typ:ldapjs@0.7.3
 ui@1.0.8
 underscore@1.0.4
 url@1.0.5
