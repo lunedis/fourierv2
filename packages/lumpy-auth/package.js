@@ -1,7 +1,7 @@
 Package.describe({
-  name: 'lumpy-ldap',
-  version: '1.0.1',
-  summary: 'Accounts login for LDAP using ldapjs. Supports anonymous DN search & LDAPS.',
+  name: 'lumpy-auth',
+  version: '1.0.0',
+  summary: 'Ldap login for lumpy auth, based on meteor-accounts-ldap',
   git: 'https://github.com/typ90/meteor-accounts-ldap',
   documentation: 'README.md'
 });
@@ -9,6 +9,9 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.versionsFrom('1.0.3.1');
+
+  api.use('coffeescript', ['server','client']);
+  api.use('underscore',  ['server','client']);
 
   api.use(['templating'], 'client');
   api.use(['typ:ldapjs@0.7.3'], 'server');
@@ -20,9 +23,8 @@ Package.onUse(function(api) {
 
   api.use('check');
 
-  api.addFiles(['ldap_client.js'], 'client');
-  api.addFiles(['ldap_server.js'], 'server');
+  api.addFiles(['ldap_client.coffee'], 'client');
+  api.addFiles(['ldap_server.coffee'], 'server');
 
   api.export('LDAP', 'server');
-  api.export('LDAP_DEFAULTS', 'server');
 });
