@@ -65,7 +65,7 @@ Template.tankStats.helpers
         minTTL = min minTTL, ship, 'ttl'
 
     ret = {}
-    ret.fittings = fittings
+    ret.roles = groupByRole fittings
     ret.totalRep = totalRep
     ret.minEHP = minEHP
     ret.minTank = minTank
@@ -76,9 +76,9 @@ Template.tankStatsTable.helpers
   tanktype: ->
     Template.instance().tanktype
   tankattr: (obj, attr, decimals=0) ->
-    return formatNumber subAttr(obj, attr, Template.parentData(2).tanktype), decimals
+    return formatNumber subAttr(obj, attr, Template.parentData(3).tanktype), decimals
   outgoingattr: (obj, attr, decimals=0) ->
-    key = Template.parentData(2).tanktype
+    key = Template.parentData(3).tanktype
     if obj[key]?
       formatNumber obj[key][attr], decimals
     else

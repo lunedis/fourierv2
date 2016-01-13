@@ -1,5 +1,5 @@
 Template.fittingSelect.helpers
-  fittings: ->
+  roles: ->
     visibleFits = @data.fittings
 
     fitIDs = Doctrines.findOne({_id: @doctrine}).fittings
@@ -12,7 +12,7 @@ Template.fittingSelect.helpers
       else
         item.visible = ""
 
-    return fittings
+    return groupByRole fittings
 
 Template.fittingSelect.events
   'change .visibleCheck input': (event) ->

@@ -50,24 +50,29 @@
 		</tr>
 	</thead>
 	<tbody>
-{{#each fittings}} 
-	<tr>
-		<td><img style="width:48px; height; 48px" src="http://image.eveonline.com/Type/{{shipTypeID}}_64.png"/></td>
-		<td><b>{{shipTypeName}}</b> ({{name}})</td>
-		<td>{{formatNumber stats.tank.ehp}}</td>
-		<td>
-			{{#with navigation}}
-				{{formatNumber speed}} m/s / {{formatNumber sig}}m
-			{{/with}}
-		</td>
-		<td>{{>damageStats stats.damage}}</td>
-		<td>{{>ewarIcons}}</td>
-		<td>{{count}}</td>
-		<td>
-			{{> countButtons}}
-		</td>
-	</tr>	
-{{/each}}
+		{{#each roles}} 
+			<tr>
+				<th colspan="8">{{role}}</th>
+			</tr>
+			{{#each fits}}
+				<tr>
+					<td><img style="width:48px; height; 48px" src="http://image.eveonline.com/Type/{{shipTypeID}}_64.png"/></td>
+					<td><b>{{shipTypeName}}</b> ({{name}})</td>
+					<td>{{formatNumber stats.tank.ehp}}</td>
+					<td>
+						{{#with navigation}}
+							{{formatNumber speed}} m/s / {{formatNumber sig}}m
+						{{/with}}
+					</td>
+					<td>{{>damageStats stats.damage}}</td>
+					<td>{{>ewarIcons}}</td>
+					<td>{{count}}</td>
+					<td>
+						{{> countButtons}}
+					</td>
+				</tr>	
+			{{/each}}
+		{{/each}}
 	</tbody>
 </table>
 </template>

@@ -1,6 +1,13 @@
 @formatNumber = (number, decimals = 0) ->
   number.toFixed(decimals).replace /\d(?=(\d{3})+$)/g, '$&,'
 
+@groupByRole = (fittings) ->
+  grouped = _.groupBy fittings, 'role'
+  result = []
+  _.each grouped, (value, key, list) ->
+    result.push {'role': key, 'fits': value}
+  return _.sortBy result, 'role'
+
 UI.registerHelper 'formatNumber', (context, options) ->
   if context
     decimals = 0

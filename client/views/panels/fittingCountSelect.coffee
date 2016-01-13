@@ -1,5 +1,5 @@
 Template.fittingCountSelect.helpers
-  fittings: ->
+  roles: ->
     fitData = @data.fittings
 
     visibleFits = _.pluck(fitData, 'id')
@@ -14,7 +14,7 @@ Template.fittingCountSelect.helpers
       else
         item.visible = ""
 
-    return fittings
+    return groupByRole fittings
 
 Template.fittingCountSelect.events
   'change .visibleCheck input': (event) ->

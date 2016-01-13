@@ -2,12 +2,7 @@ Template.fittings.helpers
   roles: ->
     fitIDs = @fittings
     fittings = _.sortBy Fittings.find({_id: {$in: fitIDs}}).fetch(), 'shipTypeName'
-    grouped = _.groupBy fittings, 'role'
-    result = []
-    _.each grouped, (value, key, list) ->
-      result.push {"role": key, "fits": value}
-
-    return _.sortBy result,'role'
+    return groupByRole fittings
   AddFittingsSchema: ->
     AddFittingsSchema
   fromDoctrine: ->

@@ -43,9 +43,8 @@ Template.overview.helpers
           minSpeed.value = speed
           minSpeed.name = "#{ship.shipTypeName} (#{ship.name})"
 
-
     ret = {}
-    ret.fittings = fittings
+    ret.roles = groupByRole fittings
     ret.totalDPS = totalDPS
     ret.minEHP = minEHP
     ret.minSpeed = minSpeed

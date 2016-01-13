@@ -1,12 +1,15 @@
 <template name="fittingSelect">
 <ul class="list-unstyled">
-{{#each fittings}}
-	<li>
-		<label class="visibleCheck">
-			<input type="checkbox" {{visible}} />
-			{{shipTypeName}} ({{name}})
-		</label>
-	</li>
+{{#each roles}}
+	<li><b>{{role}}</b></li>
+	{{#each fits}}
+		<li>
+			<label class="visibleCheck">
+				<input type="checkbox" {{visible}} />
+				{{shipTypeName}} ({{name}})
+			</label>
+		</li>
+	{{/each}}
 {{/each}}
 </ul>
 </template>
