@@ -4,7 +4,7 @@ Router.route '/',
     @render 'teddie'
     SEO.set title: Meteor.App.NAME + ' - Doctrines'
   waitOn: ->
-    Meteor.subscribe 'doctrines'
+    [Meteor.subscribe('doctrines'), Meteor.subscribe('fittings')]
   fastRender: true
 
 Router.route '/d/:slug',

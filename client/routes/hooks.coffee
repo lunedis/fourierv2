@@ -13,3 +13,6 @@ Router.onBeforeAction ->
 
 
 , only: ['teddie', 'd']
+
+Router.onAfterAction ->
+  window.scrollTo(0,0)
