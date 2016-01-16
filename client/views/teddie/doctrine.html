@@ -4,12 +4,6 @@
 <div class="page-header">
 	<h1>
 		{{name}} <small> {{links}}</small>
-		{{#if currentUser}}
-			<a href="/editDoctrine/{{_id}}" class="btn btn-default">
-				<i class="glyphicon glyphicon-pencil"></i>
-				Edit
-			</a>
-		{{/if}}
 	</h1>
 </div>
 <div class="row">
@@ -60,20 +54,6 @@
 		<p class="text-center">
 			<span class="label {{roleLabelColor}}">{{role}}</span>
 		</p>
-		{{#if currentUser}}
-			<p class="text-center">
-				<a href="/editFitting/{{_id}}" class="btn btn-default">
-					<i class="glyphicon glyphicon-pencil"></i>
-					Edit
-				</a>
-			</p>
-			<p class="text-center">
-				<button class="btn btn-warning delete">
-					<i class="glyphicon glyphicon-pencil"></i>
-					Delete
-				</button>
-			</p>
-		{{/if}}
 	</div>
 	<div class="col-sm-9">
 		<h3>{{shipTypeName}} <small>{{name}}</small></h3>

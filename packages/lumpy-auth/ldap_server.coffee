@@ -6,19 +6,7 @@ LDAP_DEFAULTS =
   port: '389',
   dn: 'ou=People,dc=lumpy,dc=eu',
   createNewUser: true,
-  searchResultsProfileMap: [
-    resultKey: 'keyID',
-    profileProperty: 'keyID'
-  ,
-    resultKey: 'vCode',
-    profileProperty: 'vCode'
-  ,
-    resultKey: 'authGroup',
-    profileProperty: 'authGroup'
-  ,
-    resultKey: 'accountStatus',
-    profileProperty: 'accountStatus'
-  ]
+  searchResultsList: ['authGroup','accountStatus','keyID', 'vCode']
 
 
 class LDAP
@@ -91,9 +79,9 @@ class LDAP
 
         # construct list of ldap attributes to fetch
         attributes = [];
-        if @options.searchResultsProfileMap
-          @options.searchResultsProfileMap.map (item) ->
-            attributes.push item.resultKey
+        if @options.searchResultsList
+          for property in @options.searchResultsList
+            attributes.push property
 
         searchOptions =
           scope: 'sub',
@@ -177,8 +165,10 @@ Accounts.registerLoginHandler 'ldap', (loginRequest) ->
         $push: 
           'services.resume.loginTokens': hashStampedToken
 
+      UpdateUser userId, ldapResponse.searchResults
+
     # Otherwise create user if option is set
-    else if ldapObj.options.createNewUser
+    else
       userObject =
         username: ldapResponse.username
       
@@ -186,32 +176,19 @@ Accounts.registerLoginHandler 'ldap', (loginRequest) ->
       if ldapResponse.email 
         userObject.email = ldapResponse.email
 
-      # Set profile values if specified in searchResultsProfileMap
-      if ldapResponse.searchResults and ldapObj.options.searchResultsProfileMap.length > 0
-
-        profileMap = ldapObj.options.searchResultsProfileMap;
-        profileObject = {};
-
-        # Loop through profileMap and set values on profile object
-        i = 0
-        while i < profileMap.length
-          resultKey = profileMap[i].resultKey
-          if ldapResponse.searchResults.hasOwnProperty(resultKey)
-            profileObject[profileMap[i].profileProperty] = ldapResponse.searchResults[resultKey]
-          i++
-
-        # Set userObject profile
-        userObject.profile = profileObject
-
 
       userId = Accounts.createUser userObject
-    else
-      # Ldap success, but no user created
-      console.log 'LDAP Authentication succeeded for ' + ldapResponse.username + ', but no user exists in Meteor. Either create the user manually or set LDAP_DEFAULTS.createNewUser to true'
-      return {
-        userId: null
-        error: new Meteor.Error 403, 'User found in LDAP but not in application' }
+      UpdateUser userId, ldapResponse.searchResults
 
     return {
       userId: userId
       token: stampedToken.token }
+
+UpdateUser = (userId, searchResults) ->
+  properties = {}
+
+  # Loop through profileMap and set values on profile object
+  for property in LDAP_DEFAULTS.searchResultsList
+    properties[property] = searchResults[property]
+
+  Meteor.users.update(userId, $set: properties)

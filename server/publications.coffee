@@ -1,3 +1,11 @@
+Meteor.publish null, ->
+  if not this.userId
+    return null
+  Meteor.users.find this.userId, fields:
+    keyID: 1
+    vCode: 1
+    authGroup: 1
+
 Meteor.publish 'doctrines', ->
   Doctrines.find({})
 
