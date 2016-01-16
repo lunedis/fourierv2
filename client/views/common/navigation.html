@@ -4,14 +4,16 @@
 		<div class="navbar-header">
 			<a href="/" class="navbar-brand">FOURIERv2</a>
 		</div>
+		{{#if currentUser}}
 		<ul class="nav navbar-nav">
 			<li><a href="/">TEDDIE</a></li>
 			{{#if isAdmin}}
-			<li><a href="/doctrines">Doctrines</a></li>
-			<li><a href="/views">Views</a></li>
-			<li><a href="/presets">Presets</a></li>
+				<li><a href="/doctrines">Doctrines</a></li>
+				<li><a href="/views">Views</a></li>
+				<li><a href="/presets">Presets</a></li>
 			{{/if}}
 		</ul>
+		{{/if}}
 		<ul class="nav navbar-nav navbar-right">
             <li id="login-dropdown-list" class="dropdown">
             	{{#if currentUser}}
