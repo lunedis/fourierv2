@@ -144,6 +144,19 @@ Accounts.registerLoginHandler 'ldap', (loginRequest) ->
       userId: null
       error: new Meteor.Error 403, 'User not found in LDAP' }
   else
+
+    if not ldapResponse.searchResults
+      return {
+        userId: null,
+        error: new Meteor.Error 403, 'User details not found in LDAP'
+      }
+    else
+      if not ldapResponse.searchResults.accountStatus == 'Internal'
+        return {
+          userId: null,
+          error: new Meteor.Error 403, 'User inactive'
+        }
+
     # Set initial userId and token vals
     userId = null
     stampedToken =
@@ -152,8 +165,6 @@ Accounts.registerLoginHandler 'ldap', (loginRequest) ->
     # Look to see if user already exists
     user = Meteor.users.findOne username: ldapResponse.username
 
-    console.log(ldapResponse);
-    console.log(user);
     # Login user if they exist
     if user
       userId = user._id
