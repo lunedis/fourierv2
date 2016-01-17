@@ -10,8 +10,6 @@ Router.onBeforeAction ->
     @render 'noaccess'
   else
     @next()
-
-
 , only: ['teddie', 'd']
 
 Router.onAfterAction ->

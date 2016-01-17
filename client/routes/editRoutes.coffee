@@ -2,11 +2,9 @@ Router.route 'doctrines',
   name: 'doctrines'
   action: ->
     @render 'doctrines'
-    SEO.set title: METEOR.App.NAME + ' - Edit Doctrines'
+    SEO.set title: Meteor.App.NAME + ' - Edit Doctrines'
   waitOn: ->
-    Meteor.subscribe 'doctrines'
-  fastRender: true
-
+    [Meteor.subscribe('allDoctrines'), Meteor.subscribe('allFittings')]
 Router.route 'doctrines/:slug',
   name: 'fittings'
   action: ->
@@ -19,7 +17,7 @@ Router.route 'doctrines/:slug',
         if doctrine
           return doctrine
   waitOn: ->
-    [Meteor.subscribe('doctrines'), Meteor.subscribe('fittings')]
+    [Meteor.subscribe('allDoctrines'), Meteor.subscribe('allFittings')]
 
 Router.route 'doctrines/edit/:_id',
   name: 'editDoctrine'
@@ -29,9 +27,9 @@ Router.route 'doctrines/edit/:_id',
         if !@ready
           return
         Doctrines.findOne _id: @params._id
-    SEO.set title: METEOR.App.NAME + ' - Edit Doctrine'
+    SEO.set title: Meteor.App.NAME + ' - Edit Doctrine'
   waitOn: ->
-    Meteor.subscribe 'doctrines'
+    Meteor.subscribe 'allDoctrines'
 
 Router.route 'fitting/edit/:_id',
   name: 'editFitting'
@@ -42,4 +40,4 @@ Router.route 'fitting/edit/:_id',
           return
         Fittings.findOne _id: @params._id
   waitOn: ->
-    [Meteor.subscribe('doctrines'), Meteor.subscribe('fittings')]
+    [Meteor.subscribe('allDoctrines'), Meteor.subscribe('allFittings')]

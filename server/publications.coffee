@@ -1,41 +1,57 @@
 Meteor.publish null, ->
   if not @userId
-    return null
-  Meteor.users.find @userId, fields:
-    keyID: 1
-    vCode: 1
-    authGroup: 1
+    @ready()
+  else
+    Meteor.users.find @userId, fields:
+      keyID: 1
+      vCode: 1
+      authGroup: 1
 
 Meteor.publish 'doctrines', ->
   if not @userId
-    return null
-  Doctrines.find()
+    @ready()
+  else
+    Doctrines.find({public: true})
+
+Meteor.publish 'allDoctrines', ->
+  if not @userId or not Meteor.users.isAdmin(@userId)
+    @ready()
+  else
+    Doctrines.find()
 
 Meteor.publish 'fittings', ->
-  Fittings.find({public: true})
+  if not @userId
+    @ready()
+  else
+    Fittings.find({public: true})
 
 Meteor.publish 'allFittings', ->
   if not @userId or not Meteor.users.isAdmin(@userId)
-    return null
-  Fittings.find()
+    @ready()
+  else
+    Fittings.find()
 
 Meteor.publish 'views', ->
   if not @userId or not Meteor.users.isAdmin(@userId)
-    return null
-  Views.find()
+    @ready()
+  else
+    Views.find()
 
 Meteor.publish 'panels', (view) ->
-  if not @userId or not Meteor.users.isAdmin(@userId)
-    return null
   check(view, String)
-  Panels.find view: view
+  if not @userId or not Meteor.users.isAdmin(@userId)
+    @ready()
+  else
+    Panels.find view: view
 
 Meteor.publish 'targetpresets', ->
   if not @userId or not Meteor.users.isAdmin(@userId)
-    return null
-  TargetPresets.find {}
+    @ready()
+  else
+    TargetPresets.find {}
 
 Meteor.publish 'attackerpresets', ->
   if not @userId or not Meteor.users.isAdmin(@userId)
-    return null
-  AttackerPresets.find {}
+    @ready()
+  else
+    AttackerPresets.find {}
