@@ -6,7 +6,7 @@ Router.onBeforeAction ->
 , except: ['teddie', 'd']
 
 Router.onBeforeAction ->
-  if isAdmin()
+  if Meteor.user() 
     @next()
   else
     @render 'noaccess'
