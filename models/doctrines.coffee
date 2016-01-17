@@ -45,8 +45,8 @@ Doctrines.attachSchema StoreDoctrineSchema
 
 Doctrines.allow
   insert: ->
-    Meteor.user()
+    isAdmin()
   update: ->
-    Meteor.user()
+    isAdmin()
   remove: ->
-    Meteor.user()
+    isAdmin()

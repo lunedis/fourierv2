@@ -116,11 +116,11 @@ Fittings.attachSchema StoreFittingsSchema
 if Meteor.isServer
   Fittings.allow
     insert: ->
-      Meteor.user()
+      isAdmin()
     update: ->
-      Meteor.user()
+      isAdmin()
     remove: ->
-      Meteor.user()
+      isAdmin()
 
   transformStats = (obj) ->
     Desc.init()
@@ -150,20 +150,26 @@ if Meteor.isServer
   Meteor.methods
     addFitting: (document) ->
       check document, AddFittingsSchema
-      doctrineID = document.doctrine
-      delete document.doctrine
-      document = transformStats document
-      check document, StoreFittingsSchema
-      fitID = Fittings.insert document
-      Doctrines.update doctrineID, $push: fittings: fitID
+      if isAdmin()
+        doctrineID = document.doctrine
+        delete document.doctrine
+        document = transformStats document
+        check document, StoreFittingsSchema
+        fitID = Fittings.insert document
+        Doctrines.update doctrineID, $push: fittings: fitID
+      else
+        throw new Meteor.Error 403, 'No Permissions'
     updateFitting: (modifier, documentID) ->
       check modifier, UpdateFittingsSchema
       check documentID, String
 
-      if modifier.$set.eft?
-        modifier.$set = transformStats modifier.$set
+      if isAdmin()
+        if modifier.$set.eft?
+          modifier.$set = transformStats modifier.$set
+        else
+          delete modifier.$set.links
+          delete modifier.$unset.eft
+        check modifier, StoreFittingsSchema
+        Fittings.update documentID, modifier
       else
-        delete modifier.$set.links
-        delete modifier.$unset.eft
-      check modifier, StoreFittingsSchema
-      Fittings.update documentID, modifier
+        throw new Meteor.Error 403, 'No Permissions'

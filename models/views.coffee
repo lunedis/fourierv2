@@ -15,8 +15,8 @@ Views.attachSchema new SimpleSchema
 
 Views.allow
   insert: ->
-    Meteor.user()
+    isAdmin()
   update: ->
-    Meteor.user()
+    isAdmin()
   remove: ->
-    Meteor.user()
+    isAdmin()

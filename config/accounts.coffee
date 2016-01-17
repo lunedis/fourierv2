@@ -2,13 +2,11 @@ Meteor.startup ->
   Accounts.config
 	 forbidClientAccountCreation: true
 
-Meteor.users.isAdmin = (user) ->
-  userObj = {}
-  if typeof user is 'object'
-    userObj = user
-  else if typeof user is 'string'
-    userObj = Meteor.users.findOne(user)
-  else
-    return new Meteor.Error 403, "Wrong parameter for isAdmin"
+@_isAdmin = (user) ->
+  return _.contains user.authGroup, 'admin'
 
-  return _.contains userObj.authGroup, 'admin'
+@isAdmin = ->
+  return Meteor.user() && _isAdmin(Meteor.user())
+
+@isAdminById = (userId) ->
+  return userId && _isAdmin(Meteor.users.findOne({_id: userId}))

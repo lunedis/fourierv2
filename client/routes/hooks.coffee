@@ -1,15 +1,15 @@
 Router.onBeforeAction ->
-  if Meteor.user() and Meteor.users.isAdmin(Meteor.user())
+  if isAdmin()
     @next()
   else
     @render 'noaccess'
 , except: ['teddie', 'd']
 
 Router.onBeforeAction ->
-  if not Meteor.user() and not Meteor.loggingIn()
-    @render 'noaccess'
-  else
+  if isAdmin()
     @next()
+  else
+    @render 'noaccess'
 , only: ['teddie', 'd']
 
 Router.onAfterAction ->

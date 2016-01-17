@@ -39,7 +39,4 @@ UI.registerHelper 'percent', (context, options) ->
   return (context * 100).toFixed(0) + "%"
 
 UI.registerHelper 'isAdmin', (context, options) ->
-  if Meteor.user()?
-    return Meteor.users.isAdmin(Meteor.user())
-  else
-    return false
+  return isAdmin()

@@ -22,11 +22,11 @@ Panels.attachSchema new SimpleSchema
 
 Panels.allow
   insert: ->
-    Meteor.user()
+    isAdmin()
   update: ->
-    Meteor.user()
+    isAdmin()
   remove: ->
-    Meteor.user()
+    isAdmin()
 
 Meteor.methods
   'updateFittingCount': (panelID, fitID, count) ->
@@ -34,4 +34,5 @@ Meteor.methods
     check fitID, String
     check count, Number
 
-    Panels.update {_id: panelID, 'data.fittings.id': fitID}, {$inc: {'data.fittings.$.count': count}}
+    if isAdmin()
+      Panels.update {_id: panelID, 'data.fittings.id': fitID}, {$inc: {'data.fittings.$.count': count}}

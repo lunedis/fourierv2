@@ -14,10 +14,10 @@ Meteor.publish 'doctrines', ->
     Doctrines.find({public: true})
 
 Meteor.publish 'allDoctrines', ->
-  if not @userId or not Meteor.users.isAdmin(@userId)
-    @ready()
-  else
+  if isAdminById(@userId)
     Doctrines.find()
+  else
+    @ready()
 
 Meteor.publish 'fittings', ->
   if not @userId
@@ -26,32 +26,32 @@ Meteor.publish 'fittings', ->
     Fittings.find({public: true})
 
 Meteor.publish 'allFittings', ->
-  if not @userId or not Meteor.users.isAdmin(@userId)
-    @ready()
-  else
+  if isAdminById(@userId)
     Fittings.find()
+  else
+    @ready()
 
 Meteor.publish 'views', ->
-  if not @userId or not Meteor.users.isAdmin(@userId)
-    @ready()
-  else
+  if isAdminById(@userId)
     Views.find()
+  else
+    @ready()
 
 Meteor.publish 'panels', (view) ->
   check(view, String)
-  if not @userId or not Meteor.users.isAdmin(@userId)
-    @ready()
-  else
+  if isAdminById(@userId)
     Panels.find view: view
+  else
+    @ready()
 
 Meteor.publish 'targetpresets', ->
-  if not @userId or not Meteor.users.isAdmin(@userId)
-    @ready()
+  if isAdminById(@userId)
+    TargetPresets.find()
   else
-    TargetPresets.find {}
+    @ready()
 
 Meteor.publish 'attackerpresets', ->
-  if not @userId or not Meteor.users.isAdmin(@userId)
-    @ready()
+  if isAdminById(@userId)
+    AttackerPresets.find()
   else
-    AttackerPresets.find {}
+    @ready()

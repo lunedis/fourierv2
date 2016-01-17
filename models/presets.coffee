@@ -34,11 +34,11 @@ TargetPresets.attachSchema TargetPresetsStoreSchema
 if Meteor.isServer
   TargetPresets.allow
     insert: ->
-      Meteor.user()
+      isAdmin()
     update: ->
-      Meteor.user()
+      isAdmin()
     remove: ->
-      Meteor.user()
+      isAdmin()
 
   transformNavigation = (obj) ->
     Desc.init()
@@ -62,19 +62,24 @@ if Meteor.isServer
     addTargetPresetEFT: (document) ->
       check document, TargetPresetsEFTSchema
       
-      document = transformNavigation document 
+      if isAdmin()
+        document = transformNavigation document 
 
-      check document, TargetPresetsStoreSchema
-      TargetPresets.insert document
+        check document, TargetPresetsStoreSchema
+        TargetPresets.insert document
+      else
+        throw new Meteor.Error 403, 'Not allowed' 
     editTargetPresetEFT: (modifier, documentID) ->
       check modifier, TargetPresetsEFTSchema
       check documentID, String
 
-      modifier.$set = transformNavigation modifier.$set
+      if isAdmin()
+        modifier.$set = transformNavigation modifier.$set
 
-      check modifier, TargetPresetsStoreSchema
-      TargetPresets.update documentID, modifier
-
+        check modifier, TargetPresetsStoreSchema
+        TargetPresets.update documentID, modifier
+      else
+        throw new Meteor.Error 403, 'Not allowed' 
 
 @AttackerPresets = new Mongo.Collection 'attackerpresets'
 
@@ -123,12 +128,12 @@ AttackerPresets.attachSchema AttackerPresetsStoreSchema
 
 if Meteor.isServer
   AttackerPresets.allow
-    insert: ->
-      true
-    update: ->
-      true
+    insert: -> 
+      isAdmin()
+    update: -> 
+      isAdmin()
     remove: ->
-      true
+      isAdmin()
 
   transformDamage = (obj) ->
     Desc.init()
@@ -143,16 +148,22 @@ if Meteor.isServer
   Meteor.methods
     'addAttackerPresetEFT': (document) ->
       check document, AttackerPresetsEFTSchema
-      
-      document = transformDamage document
 
-      check document, AttackerPresetsStoreSchema
-      AttackerPresets.insert document
+      if isAdmin()
+        document = transformDamage document
+
+        check document, AttackerPresetsStoreSchema
+        AttackerPresets.insert document
+      else
+        throw new Meteor.Error 403, 'Not allowed'
     'editAttackerPresetEFT': (modifier, documentID) ->
       check modifier, AttackerPresetsEFTSchema
       check documentID, String
 
-      modifier.$set = transformDamage modifier.$set
+      if isAdmin()
+        modifier.$set = transformDamage modifier.$set
 
-      check modifier, AttackerPresetsStoreSchema
-      AttackerPresets.update documentID, modifier
+        check modifier, AttackerPresetsStoreSchema
+        AttackerPresets.update documentID, modifier
+      else
+        throw new Meteor.Error 403, 'Not allowed'
