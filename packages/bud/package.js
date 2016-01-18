@@ -17,6 +17,7 @@ Package.onUse(function(api) {
 
 //  api.addFiles('routes.coffee', 'server');
   api.addFiles('mapsolarsystems.coffee', 'server');
+  api.addFiles('theraholes.coffee', 'server')
 });
 
 Package.onTest(function(api) {
@@ -28,5 +29,6 @@ Package.onTest(function(api) {
 
 Npm.depends({
   "request": "2.67.0",
-  "cheerio": "0.19.0"
+  "cheerio": "0.19.0",
+  "node-dijkstra": "1.1.3"
 });
