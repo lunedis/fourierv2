@@ -36,3 +36,4 @@ Router.route '/api/:slug', ->
 
   @response.end(JSON.stringify(dnas))
 , where: 'server'
+
