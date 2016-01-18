@@ -1,5 +1,5 @@
-#Tinytest.add 'setup', (test) ->
-#  setup()
+Tinytest.add 'setup', (test) ->
+  setup()
 
 Tinytest.add 'bud system complete', (test) ->
   systems1 = complete('PR-')
@@ -9,13 +9,13 @@ Tinytest.add 'bud system complete', (test) ->
   test.equal systems2.length, 2, 'Completing 4-C should give 2 results'
   test.equal systems2[0].solarSystemName, '4-CM8I', 'First result should be 4-CM8I'
 
-#Tinytest.add 'route calculation', (test) ->
-#  systems1 = complete('PR-')
-#  systems2 = complete('Jita')
+Tinytest.add 'route calculation', (test) ->
+  systems1 = complete('PR-')
+  systems2 = complete('Jita')
 
-  #route = getRoute(systems1[0].solarSystemID, systems2[0].solarSystemID)
+  route = getRoute(30000002,30000006)
+  test.equal route, 5
 
-  #console.log route.length
 
-Tinytest.add 'theraholes', (test) ->
-  theraHoles()
+#Tinytest.add 'theraholes', (test) ->
+#  theraHoles()

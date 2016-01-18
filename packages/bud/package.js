@@ -14,7 +14,7 @@ Package.onUse(function(api) {
   api.use('coffeescript', ['server']);
   api.use('underscore', ['server', 'client']);
   api.use('iron:router', ['server']);
-
+  api.use('meteorhacks:async',['server']);
 //  api.addFiles('routes.coffee', 'server');
   api.addFiles('mapsolarsystems.coffee', 'server');
   api.addFiles('theraholes.coffee', 'server')
@@ -30,5 +30,5 @@ Package.onTest(function(api) {
 Npm.depends({
   "request": "2.67.0",
   "cheerio": "0.19.0",
-  "node-dijkstra": "1.1.3"
+  "neo4j": "2.0.0-RC2"
 });

@@ -22,19 +22,57 @@ MapSolarSystems.deny
   regex = "^#{name}.*"
   MapSolarSystems.find({solarSystemName: {$regex: regex}}).fetch()
 
-@Graph = Npm.require('node-dijkstra')
-@g = new Graph()
+neo4j = Npm.require('neo4j')
+db = new neo4j.GraphDatabase('http://neo4j:thera@localhost:7474')
+
+syncCypher = Async.wrap(db, 'cypher')
 
 @setup = ->
-  jumps = MapSolarSystemJumps.find({},{sort: {fromSolarSystemID: 1}}).fetch()
-  grouped = _.groupBy(jumps, (jump) -> jump.f)
-  _.each(grouped, (value, key, list) ->
-    connections = {}
-    _.each(value, (con) ->
-      connections[con.s] = 1
-    )
-    g.addVertex key, connections
-  )
+  systems = MapSolarSystems.find({},{limit: 20, fields: {'solarSystemID': 1}}).fetch()
+
+  query = """
+MATCH (n)
+OPTIONAL MATCH (n)-[r]-()
+DELETE n,r"""
+
+  syncCypher
+    query: query
+  
+  _.each systems, (item) ->
+    query = """
+      CREATE (system: System {props})
+      RETURN system"""
+
+    syncCypher
+      query: query
+      params: props: id: item.solarSystemID
+
+
+
+  jumps = MapSolarSystemJumps.find({}, {limit: 21}).fetch()
+  _.each jumps, (jump) ->
+    query = """
+      MATCH (system1:System {id: {id1}})
+      MATCH (system2:System {id: {id2}})
+      MERGE (system1) -[rel:jumps]-> (system2)"""
+
+    syncCypher
+      query: query
+      params:
+        id1: jump.f
+        id2: jump.s
 
 @getRoute = (from, to) ->
-  return g.shortestPath(from.toString(), to.toString())
+  query = """
+    MATCH (system1:System {id: {id1}}),
+       (system2:System {id:{id2}}),
+       p = shortestPath((system1)-[*..150]-(system2))
+   RETURN length(p)"""
+
+  result = syncCypher
+    query: query
+    params:
+      id1: from
+      id2: to
+  return result[0]['length(p)']
+    
