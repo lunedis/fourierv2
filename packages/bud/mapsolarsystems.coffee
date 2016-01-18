@@ -28,7 +28,7 @@ db = new neo4j.GraphDatabase('http://neo4j:thera@localhost:7474')
 syncCypher = Async.wrap(db, 'cypher')
 
 @setup = ->
-  systems = MapSolarSystems.find({},{limit: 20, fields: {'solarSystemID': 1}}).fetch()
+  systems = MapSolarSystems.find({},{ fields: {'solarSystemID': 1}}).fetch()
 
   query = """
 MATCH (n)
@@ -49,7 +49,7 @@ DELETE n,r"""
 
 
 
-  jumps = MapSolarSystemJumps.find({}, {limit: 21}).fetch()
+  jumps = MapSolarSystemJumps.find({}).fetch()
   _.each jumps, (jump) ->
     query = """
       MATCH (system1:System {id: {id1}})

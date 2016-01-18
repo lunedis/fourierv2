@@ -1,5 +1,5 @@
-Tinytest.add 'setup', (test) ->
-  setup()
+#Tinytest.add 'setup', (test) ->
+#  setup()
 
 Tinytest.add 'bud system complete', (test) ->
   systems1 = complete('PR-')
@@ -13,8 +13,9 @@ Tinytest.add 'route calculation', (test) ->
   systems1 = complete('PR-')
   systems2 = complete('Jita')
 
-  route = getRoute(30000002,30000006)
-  test.equal route, 5
+  route = getRoute(systems1[0].solarSystemID,systems2[0].solarSystemID)
+  console.log route
+  test.equal route, 39
 
 
 #Tinytest.add 'theraholes', (test) ->
