@@ -15,14 +15,16 @@ Package.onUse(function(api) {
   api.use('underscore', ['server', 'client']);
   api.use('iron:router', ['server']);
   api.use('meteorhacks:async',['server']);
-//  api.addFiles('routes.coffee', 'server');
+  api.addFiles('routes.coffee', 'server');
   api.addFiles('mapsolarsystems.coffee', 'server');
   api.addFiles('theraholes.coffee', 'server')
+  api.addFiles('routing.coffee', 'server');
 });
 
 Package.onTest(function(api) {
   api.use('coffeescript');
   api.use('tinytest');
+  api.use('underscore');
   api.use('bud');
   api.addFiles('bud-tests.coffee', 'server');
 });

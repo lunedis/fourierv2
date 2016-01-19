@@ -72,6 +72,7 @@ manuelschoebel:ms-seo@0.4.1
 mdg:validation-error@0.2.0
 meteor@1.1.10
 meteor-base@1.0.1
+meteorhacks:async@1.0.0
 meteortoys:toykit@2.2.1
 minifiers@1.1.7
 minimongo@1.0.10

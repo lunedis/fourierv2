@@ -24,5 +24,13 @@ Future = Npm.require 'fibers/future'
       }
     .value()
 
-
-  console.log systems
+@closestTheraHole = (from) ->
+  systems = theraHoles()
+  shortest = _.reduce(systems, (memo, system) ->
+    distance = Routing.getDistance(from, system.solarSystemID)
+    if distance < memo.jumps
+      return {jumps: distance, system: system}
+    else
+      return memo
+  ,{jumps: 255, system: {}})
+ 
