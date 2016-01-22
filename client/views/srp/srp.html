@@ -1,0 +1,39 @@
+<template name="srp">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">New Request</h3>
+				</div>
+				<div class="panel-body">
+					{{> quickForm id="addRequestForm" schema=SRPFormSchema type="method" meteormethod="addSRPRequest"}}
+				</div>
+			</div>
+		</div>
+	</div>
+<h3>Your current requests</h3>
+<table class="table table-bordered table-striped">
+<thead>
+	<tr>
+		<th>Date</th>
+		<th>Link</th>
+		<th>FC</th>
+		<th>Type</th>
+		<th>Kommentar</th>
+		<th>Status</th>
+	</tr>
+</thead>
+<tbody>
+	{{#each requests}}
+		<tr>
+			<td>{{date}}</td>
+			<td><a href="{{link}}" target="_blank">{{link}}</a></td>
+			<td>{{fc}}</td>
+			<td><span class="label {{srpTypeLabel}}">{{type}}</span></td>
+			<td>{{comment}}</td>
+			<td><span class="label {{srpStatusLabel}}">{{status}}</span></td>
+		</tr>
+	{{/each}}
+</tbody>
+</table>
+</template>

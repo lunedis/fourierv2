@@ -55,3 +55,10 @@ Meteor.publish 'attackerpresets', ->
     AttackerPresets.find()
   else
     @ready()
+
+
+Meteor.publish 'srprequests', ->
+  if isAdminById(@userId)
+    SRPRequests.find()
+  else
+    SRPRequests.find({creator: Meteor.users.findOne(_id: @userId).username})
