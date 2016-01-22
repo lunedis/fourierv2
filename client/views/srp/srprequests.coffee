@@ -1,8 +1,8 @@
 Template.srprequests.helpers
   openRequests: ->
-    SRPRequests.find status: 'Open'
+    SRPRequests.find {status: 'Open'}, sort: date: 1
   archivedRequests: ->
-    SRPRequests.find status: $not: 'Open'
+    SRPRequests.find {status: $not: 'Open'}, sort: date: -1
   srpStatusLabel: ->
     if @status == 'Accepted'
       return 'label-success'

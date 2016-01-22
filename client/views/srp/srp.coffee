@@ -1,6 +1,6 @@
 Template.srp.helpers
   requests: ->
-    SRPRequests.find(creator: Meteor.user().username)
+    SRPRequests.find({creator: Meteor.user().username}, sort: date: -1)
   SRPFormSchema: ->
     SRPFormSchema
   srpStatusLabel: ->
