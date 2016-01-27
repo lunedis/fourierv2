@@ -13,8 +13,8 @@ TYPE_PHASEDWEAPONTP = 19814
 TYPE_SSMEDIUMPLASMASMARTBOMB = 14220
 TYPE_LARGEREMOTESHIELDBOOSTERII = 3608
 
-roughly = (test, actual, expected, epsilon) ->
-  test.equal(Math.abs(actual - expected) < epsilon, true)
+roughly = (test, actual, expected, epsilon, text='') ->
+  test.equal(Math.abs(actual - expected) < epsilon, true, text)
 
 Tinytest.add 'desc init', (test) ->
 	test.equal Desc.init(), true
@@ -146,7 +146,17 @@ Tinytest.add 'desc cloak', (test) ->
 
   nav = fit.getNavigation()
 
-  roughly test, nav[0].speed, 316, 1
+  roughly test, nav[0].speed, 316, 1, 'Cloak should be inactive by default'
+
+Tinytest.add 'desc MJFG', (test) ->
+  fit = new DescFitting()
+
+  fit.setShip lookupShip "Stork" 
+  fit.addModule lookupModule "Micro Jump Field Generator"
+
+  nav = fit.getNavigation()
+
+  roughly test, nav[0].sig, 69, 1, 'MJFG should not always be active'
 
 Tinytest.add 'desc dualprop', (test) ->
   fit = new DescFitting()

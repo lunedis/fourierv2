@@ -56,6 +56,8 @@ class DescFitting
   EFFECT_SPEEDBOOSTSIGMASS: 1254 # for mwd
   EFFECT_MJD: 4921 # for mjd
 
+  EFFECT_MJFG: 6208 # for micro jump field generator
+
   # EWAR
   EFFECT_WEB: 586
   EFFECT_TARGETPAINT: 1549
@@ -109,6 +111,10 @@ class DescFitting
         typeName = lookupName module
         prop = {typeID: module, typeName: typeName, key: key}
         @propmods.push prop
+
+      # MJFG handling
+      if typeHasEffect(module, DOGMA.STATE_Active, @EFFECT_MJFG)
+        @dogmaContext.setModuleState key, DOGMA.STATE_Online
 
       return key
     else
