@@ -20,9 +20,13 @@ class DescFitting
   ATTR_EXPLOSIVEDAMAGE: 116
   ATTR_KINETICDAMAGE: 117
   ATTR_THERMALDAMAGE: 118
-  ATTR_LOCKRANGE: 76
   ATTR_MAXVELOCITY: 37
   ATTR_SIGNATURERADIUS: 552
+  # Targeting
+  ATTR_LOCKRANGE: 76
+  ATTR_SCANRES: 564
+  ATTR_TARGETS: 192
+  ATTR_SENSORSTRENGTH: [208, 209, 210, 211]
   # Missiles
   ATTR_MISSILEDAMAGEMULTIPLIER: 212
   ATTR_FLIGHTTIME: 281
@@ -65,10 +69,13 @@ class DescFitting
   EFFECT_POINT: 39
   EFFECT_SCRAM: 5934
   EFFECT_ECM: 1358
+  EFFECT_TD: 3690
 
   ATTR_SPEEDFACTOR: 20
   ATTR_SIGNATURERADIUSBONUS: 554
   ATTR_MAXTARGETRANGEBONUS: 309
+  ATTR_MAXRANGEBONUS: 351
+  ATTR_SENSORSTRENGTHBONUS: [238, 239, 240, 241]
 
   # TODO: better way?
   MODES:
@@ -169,6 +176,7 @@ class DescFitting
     stats.damage = @getDamage()
     stats.outgoing = @getOutgoing()
     stats.ewar = @getEwar()
+    stats.targeting = @getTargeting()
     return stats
 
   getStats: ->
@@ -459,15 +467,55 @@ class DescFitting
         falloff: eA.falloff
         strength: strength
 
+    callbacks[@EFFECT_TD] = (eA, m) =>
+      maxRangeBonus = @dogmaContext.getModuleAttribute(
+        m.key, @ATTR_MAXRANGEBONUS)
+
+      strength = maxRangeBonus / -100
+      if !result.tds?
+        result.tds = []
+
+      result.tds.push
+        optimal: eA.range
+        falloff: eA.falloff
+        strength: strength
+
+    callbacks[@EFFECT_ECM] = (eA, m) =>
+      strengths = (@dogmaContext.getModuleAttribute(
+        m.key, attr) for attr in @ATTR_SENSORSTRENGTHBONUS)
+
+      strength = _.max _.values strengths
+
+      if !result.ecm?
+        result.ecm = []
+
+      result.ecm.push
+        optimal: eA.range
+        falloff: eA.falloff
+        strength: strength
+
     @forModulesAndEffects callbacks
 
     return result
+
+  getTargeting: () ->
+    attr = @getShipAttributes [@ATTR_TARGETS, @ATTR_SCANRES]
+    targeting = {}
+    #targeting.range = attr[@ATTR_LOCKRANGE]
+    targeting.scanres = attr[@ATTR_SCANRES]
+    targeting.targets = attr[@ATTR_TARGETS]
+
+    attr = @getShipAttributes @ATTR_SENSORSTRENGTH
+    targeting.strength = _.max _.values attr
+    
+    return targeting
 
 class DescFleet
   constructor: ->
     @fleetContext = new FleetContext
     @squadCommander = null
     @wingCommander = null
+    @fleetCommander = null
     this.fits = []
 
   addFit: (fit) ->
@@ -487,6 +535,12 @@ class DescFleet
       @wingCommander = fit
     else
       throw new Meteor.Error 500, 'Error setting wing commander'
+
+  setFleetCommander: (fit) ->
+    if @fleetContext.addFleetCommander fit.dogmaContext
+      @fleetCommander = fit
+    else
+      throw new Meteor.Error 500, 'Error setting fleet commander'
 
 Desc.ParseEFT = (fitting) ->
   parse =
@@ -652,6 +706,22 @@ Desc.getStandardLinks2 = ->
   f.addModule 4264
   f.addModule 4272
   f.addModule 11014
+  f.addModule 11014
+  f.addModule 11014
+  return f
+
+Desc.getInformationLinks = ->
+  f = new DescFitting
+  f.setShip 29988
+  f.addImplant 21889
+  f.addModule 29982
+  f.addModule 30058
+  f.addModule 30149
+  f.addModule 30130
+  f.addModule 30102
+  f.addModule 4268
+  f.addModule 4270
+  f.addModule 4272
   f.addModule 11014
   f.addModule 11014
   return f

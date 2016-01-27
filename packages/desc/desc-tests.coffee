@@ -402,3 +402,60 @@ Tinytest.add 'desc imps', (test) ->
   fit = Desc.FromParse parse
   stats = fit.getNavigation()
   roughly test, stats[1].speed, 1535, 1
+
+Tinytest.add 'desc info links and targeting', (test) ->
+  crucifier = """[Crucifier, 1MN Armor Big]
+
+200mm Steel Plates II
+Damage Control II
+Energized Adaptive Nano Membrane II
+
+1MN Monopropellant Enduring Afterburner
+Alumel-Wired Sensor Augmentation, Targeting Range Script
+Tracking Disruptor II, Optimal Range Disruption Script
+Tracking Disruptor II, Optimal Range Disruption Script
+
+Drone Link Augmentor I
+125mm Gatling AutoCannon I, EMP S
+
+Small Tracking Diagnostic Subroutines I
+Small Tracking Diagnostic Subroutines I
+[Empty Rig slot]
+
+
+Warrior I x9"""
+  fit = Desc.FromEFT(crucifier);
+  fleet = new DescFleet()
+  fleet.setFleetCommander Desc.getInformationLinks()
+  fleet.setWingCommander Desc.getStandardLinks1()
+  fleet.setSquadCommander Desc.getStandardLinks2()
+  fleet.addFit fit
+
+  stats = fit.getStats()
+  roughly test, stats.targeting.range, 180000, 1000
+  roughly test, stats.targeting.strength, 25.1, 0.1
+  roughly test, stats.targeting.scanres, 743, 1
+  roughly test, stats.targeting.targets, 6, 1
+
+  roughly test, stats.ewar.tds[0].optimal, 143640, 1
+  roughly test, stats.ewar.tds[0].falloff, 36000, 1
+  roughly test, stats.ewar.tds[0].strength, 0.786, 0.001 
+
+Tinytest.add 'desc info links and ecm', (test) ->
+  fit = new DescFitting
+  fit.setShip lookupShip 'Griffin'
+  fit.addModule lookupModule 'Enfeebling Phase Inversion ECM I'
+  fit.addModule lookupModule 'Small Particle Dispersion Projector I'
+  fit.addModule lookupModule 'Small Particle Dispersion Projector I'
+  fit.addModule lookupModule 'Small Particle Dispersion Projector I'
+
+  fleet = new DescFleet()
+  fleet.setFleetCommander Desc.getInformationLinks()
+  fleet.setWingCommander Desc.getStandardLinks1()
+  fleet.setSquadCommander Desc.getStandardLinks2()
+  fleet.addFit fit
+
+  stats = fit.getEwar()
+  roughly test, stats.ecm[0].optimal, 79579, 1
+  roughly test, stats.ecm[0].falloff, 48114, 1
+  roughly test, stats.ecm[0].strength, 10.5, 0.1 
