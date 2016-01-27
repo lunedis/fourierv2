@@ -42,7 +42,7 @@ Template.application.rendered = ->
       series: _.map fittings, (ship) ->
         return {
           name: "#{ship.shipTypeName} (#{ship.name})"
-          data: _.map _.range(0,120), (distance) ->
+          data: _.map _.range(0,panelData.maxDistance), (distance) ->
             Desc.dps ship.stats.damage, navigation, distance * 1e3
         }
 
