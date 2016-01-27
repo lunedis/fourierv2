@@ -5,3 +5,10 @@
     </div>
     {{> footer}}
 </template>
+<template name="fluidLayout">
+{{> navigation}}
+    <div class="container-fluid" style="padding-left: 50px;	padding-right: 50px;">
+    	{{> yield}}
+    </div>
+    {{> footer}}
+</template>

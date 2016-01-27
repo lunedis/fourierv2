@@ -12,6 +12,7 @@ Router.route '/views',
 Router.route '/view/:_id',
   name: 'view'
   action: ->
+    @layout 'fluidLayout'
     @render 'view', 
       data: ->
         if !@ready

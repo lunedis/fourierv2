@@ -134,6 +134,7 @@ if Meteor.isServer
         fleet.setWingCommander Desc.getArmorLoki()
       else if obj.links == 'shield'
         fleet.setWingCommander Desc.getSiegeLoki()
+      fleet.setFleetCommander Desc.getInformationLinks() 
 
       fleet.addFit fit
 
@@ -173,3 +174,49 @@ if Meteor.isServer
         Fittings.update documentID, modifier
       else
         throw new Meteor.Error 403, 'No Permissions'
+
+  getEFT = (fit) ->
+    eftModule = (module) ->
+      s = module.typeName
+      if module.chargeName?
+        s += ", " + module.chargeName
+      s += "\n"
+      return s
+    eftCharge = (charge) ->
+      return charge.typeName + " x" + charge.quantity + "\n"
+
+    eft = "[#{fit.shipTypeName}, #{fit.name}]\n"
+    for m in fit.loadout.lows
+      eft += eftModule(m) 
+    eft += "\n" 
+    for m in fit.loadout.mids
+      eft += eftModule(m) 
+    eft += "\n" 
+    for m in fit.loadout.highs
+      eft += eftModule(m) 
+    eft += "\n" 
+    for m in fit.loadout.rigs
+      eft += eftModule(m) 
+    eft += "\n" 
+    for m in fit.loadout.subs
+      eft += eftModule(m) 
+    eft += "\n" 
+    for m in fit.loadout.drones
+      eft += eftCharge(m) 
+    eft += "\n" 
+    for m in fit.loadout.charges
+      eft += eftCharge(m) 
+
+    return eft
+  @RecalculateStats = ->
+    fits = Fittings.find().fetch()
+    _.each fits, (fit) ->
+      doctrine = Doctrines.findOne {fittings: fit._id}
+      unless doctrine
+        return
+      set = {}
+      set.links = doctrine.links
+      set.eft = getEFT(fit)
+            
+      newSet = transformStats(set) 
+      Fittings.update(fit._id, $set: newSet) 
