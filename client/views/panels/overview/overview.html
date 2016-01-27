@@ -95,12 +95,22 @@
 {{/each}}
 {{#each stats.ewar.tps}}
 	{{#ewarIcon type="tp"}}
-		{{percent strength}}
+		{{formatNumberK optimal}}k {{percent strength}}
 	{{/ewarIcon}}
 {{/each}}
 {{#each stats.ewar.damps}}
 	{{#ewarIcon type="damp"}}
-		{{percent strength}}
+		{{formatNumberK optimal}}+{{formatNumberK falloff}}k
+	{{/ewarIcon}}
+{{/each}}
+{{#each stats.ewar.tds}}
+	{{#ewarIcon type="td"}}
+		{{formatNumberK optimal}}k
+	{{/ewarIcon}}
+{{/each}}
+{{#each stats.ewar.ecm}}
+	{{#ewarIcon type="ecm"}}
+		{{formatNumberK optimal}}k
 	{{/ewarIcon}}
 {{/each}}
 </template>
