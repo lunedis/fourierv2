@@ -40,6 +40,12 @@ descriptionSchema = new SimpleSchema
     optional: true
     autoform:
       rows: 2
+  refits:
+    type: String
+    label: "Refits"
+    optional: true
+    autoform:
+      rows: 4
 loadoutSchema = new SimpleSchema
   shipTypeID:
     type: Number
