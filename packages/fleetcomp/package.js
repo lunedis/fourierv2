@@ -11,11 +11,13 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.use('coffeescript', ['client', 'server']);
-  api.use('underscore', ['client', 'server']);
-  api.export('Fleetcomp', ['server', 'client']);
-  api.addFiles('invtypes.coffee',['client','server']);
-  api.addFiles('fleetcomp.coffee',['client', 'server']);
+  api.use('coffeescript', 'server');
+  api.use('underscore', 'server');
+  api.use('evesde', 'server');
+
+  api.export('Fleetcomp', 'server');
+  
+  api.addFiles('fleetcomp.coffee', 'server');
   //api.addFiles('routes.coffee', ['server', 'client']);
 });
 
@@ -24,7 +26,7 @@ Package.onTest(function(api) {
   api.use('tinytest');
   api.use('underscore');
   api.use('fleetcomp');
-  api.addFiles('fleetcomp-tests.coffee', ['client', 'server']);
+  api.addFiles('fleetcomp-tests.coffee', 'server');
 });
 
 Npm.depends({

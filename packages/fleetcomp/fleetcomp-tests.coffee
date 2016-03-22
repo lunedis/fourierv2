@@ -1,14 +1,7 @@
-#Tinytest.add 'setup', (test) ->
-#  setup()
-
 TEST_PASTE = '''
-Lorraine Denniard	J115405	Sabre	Interdictor	Squad Member	0 - 0 - 0	Wing 1 / Squad 1
+Lorraine Denniard	J115405 (Docked)	Sabre	Interdictor	Squad Member	0 - 0 - 0	Wing 1 / Squad 1
 Lucia Denniard	J115405	Paladin	Marauder	Squad Commander (Boss)	0 - 0 - 5	Wing 1 / Squad 1
 '''
-
-Tinytest.add 'invtypes', (test) ->
-  s = lookup('Sabre')
-  test.equal s.typeName, 'Sabre'
 
 Tinytest.add 'fleetcomp parse and basic information', (test) ->
   f = Fleetcomp.fromPaste(TEST_PASTE)
@@ -19,3 +12,8 @@ Tinytest.add 'fleetcomp parse and basic information', (test) ->
   test.equal f.locations[0].count, 2, 'Two People'
   test.equal f.locations[0].solarSystemName, 'J115405', 'System Name'
   test.equal f.totalMass, 93530000, 'Mass of fleet'
+
+  test.equal f.commanders[0].skilled, true
+  test.equal f.commanders[0].shipTypeID, 28659
+
+  test.equal f.docked.length, 1
