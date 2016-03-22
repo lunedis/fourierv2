@@ -1,6 +1,6 @@
 commands = {}
 
-Router.route('/bud', {where: 'server'}).post ->
+Router.route('/bud', {where: 'server'}).post () ->
     trigger = @request.body.trigger_word
     args = @request.body.text.replace(trigger, '').trim()
    

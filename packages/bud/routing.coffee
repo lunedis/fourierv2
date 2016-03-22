@@ -1,13 +1,3 @@
-@MapSolarSystemJumps = new Meteor.Collection 'mapsolarsystemjumps'
-
-MapSolarSystemJumps.deny
-  insert: -> 
-    true
-  update: ->
-    true
-  remove: ->
-    true
-
 neo4j = Npm.require('neo4j')
 db = new neo4j.GraphDatabase('http://neo4j:thera@localhost:7474')
 

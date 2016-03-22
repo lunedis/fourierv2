@@ -14,12 +14,12 @@ Package.onUse(function(api) {
   api.use('coffeescript', ['server', 'client']);
   api.use('underscore', ['server', 'client']);
   api.use('livedata', 'server');
+  api.use('evesde', 'server');
 
   api.export('Desc', ['server', 'client']);
   api.export('DescFitting', 'server');
   api.export('DescFleet', 'server');
 
-  api.addFiles('invtypes.coffee', 'server');
   api.addFiles('libdogmaffi.coffee', 'server');
   api.addFiles('desc-dps.coffee', ['server', 'client'])
   api.addFiles('desc.coffee', 'server');
@@ -29,6 +29,7 @@ Package.onUse(function(api) {
 Package.onTest(function(api) {
   api.use('coffeescript');
   api.use('tinytest');
+  api.use('evesde');
   api.use('desc');
   api.addFiles('libdogmaffi-tests.coffee', 'server');
   api.addFiles('desc-tests.coffee', 'server');

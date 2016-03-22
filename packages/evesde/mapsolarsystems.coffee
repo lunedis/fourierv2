@@ -1,4 +1,4 @@
-@MapSolarSystems = new Meteor.Collection 'mapsolarsystems'
+MapSolarSystems = new Meteor.Collection 'mapsolarsystems'
 
 MapSolarSystems.deny
   insert: -> 
