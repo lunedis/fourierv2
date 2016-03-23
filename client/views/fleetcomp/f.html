@@ -1,0 +1,135 @@
+<template name="fleetcomp">
+{{log this}}
+<div class="row">
+	<div class="col-md-3">
+		<h3>Ships</h3>
+		<table class="table table-bordered table-condensed">
+			<tbody>
+				{{#each ships}}
+				<tr>
+					<td>{{typeName}}</td>
+					<td style="text-align: right;">{{count}}</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+	<div class="col-md-3">
+		<h3>Systems</h3>
+		<table class="table table-bordered table-condensed">
+			<tbody>
+				{{#each locations}}
+				<tr>
+					<td>{{solarSystemName}}</td>
+					<td style="text-align: right;">{{count}}</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+	<div class="col-md-6">
+		<h3>Commanders</h3>
+		<table class="table table-bordered table-condensed">
+			<tbody>
+				{{#each commanders}}
+				<tr class="{{unskilled}}">
+					<td>{{name}}</td>
+					<td>{{location}}</td>
+					<td>{{shipTypeName}}</td>
+					<td>{{role}}</td>
+					<td>{{skills.fleetcommand}} | {{skills.wingcommand}} | {{skills.leadership}}</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4">
+		<h3>Total Mass</h3>
+		<h2>{{formatNumber totalMass}}</h2>
+	</div>
+	<div class="col-md-8">
+		<h3>WH Jumps</h3>
+		<table class="table table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th># of times</th>
+					<th>100m</th>
+					<th>500m</th>
+					<th>1000m</th>
+					<th>2000m</th>
+					<th>3000m</th>
+					<th>5000m</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>normal</th>
+					{{{WHTrips 100}}}
+					{{{WHTrips 500}}}
+					{{{WHTrips 1000}}}
+					{{{WHTrips 2000}}}
+					{{{WHTrips 3000}}}
+					{{{WHTrips 5000}}}
+				</tr>
+				<tr>
+					<th>reduced</th>
+					{{{WHTrips 50}}}
+					{{{WHTrips 250}}}
+					{{{WHTrips 500}}}
+					{{{WHTrips 1000}}}
+					{{{WHTrips 1500}}}
+					{{{WHTrips 2500}}}
+				</tr>
+				<tr>
+					<th>normal</th>
+					{{{WHTrips 10}}}
+					{{{WHTrips 50}}}
+					{{{WHTrips 100}}}
+					{{{WHTrips 200}}}
+					{{{WHTrips 300}}}
+					{{{WHTrips 500}}}
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+	<h3>Docked</h3>
+		<table class="table table-bordered table-condensed">
+			<tbody>
+				{{#each docked}}
+				<tr>
+					<td>{{name}}</td>
+					<td>{{location}}</td>
+					<td>{{shipTypeName}}</td>
+					<td>{{role}}</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Update Fleetcomp</h3>
+			</div>
+			<div class="panel-body">
+				<form class="updateFleetcomp">
+					<div class="form-group">
+						<textarea class="form-control" rows="5" name="paste"></textarea>
+					</div>
+					<div class="form-group">
+						<input class="btn btn-primary" name="submit" id="submit" type="submit" value="Go">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</template>

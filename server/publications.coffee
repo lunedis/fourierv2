@@ -62,3 +62,9 @@ Meteor.publish 'srprequests', ->
     SRPRequests.find()
   else
     SRPRequests.find({creator: Meteor.users.findOne(_id: @userId).username})
+
+Meteor.publish 'fleetcomps', ->
+  if isAdminById(@userId)
+    Fleetcomps.find()
+  else
+    @ready()

@@ -4,7 +4,7 @@ Lucia Denniard	J115405	Paladin	Marauder	Squad Commander (Boss)	0 - 0 - 5	Wing 1 
 '''
 
 Tinytest.add 'fleetcomp parse and basic information', (test) ->
-  f = Fleetcomp.fromPaste(TEST_PASTE)
+  f = parseFleetcomp(TEST_PASTE)
   test.equal f.ships[0].count, 1, 'Should be 1 Sabre'
   test.equal f.ships[1].typeName, 'Paladin', 'Should be 1 Paladin'
   test.equal f.ships[1].typeID, 28659, 'Paladin typeID'
