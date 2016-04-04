@@ -115,7 +115,7 @@ class DescFitting
       # propmod handling 
       if typeHasEffect(module, DOGMA.STATE_Active, @EFFECT_SPEEDBOOST) or typeHasEffect(module, DOGMA.STATE_Active, @EFFECT_MJD)
         @dogmaContext.setModuleState key, DOGMA.STATE_Online
-        typeName = lookupName module
+        typeName = InvTypes.lookupName module
         prop = {typeID: module, typeName: typeName, key: key}
         @propmods.push prop
 
@@ -568,7 +568,7 @@ Desc.ParseEFT = (fitting) ->
       moduleCount = 0
 
     if (m = headerRegex.exec(l)) != null
-      if id = lookupShip m[1]
+      if id = InvTypes.lookupShip m[1]
         parse.shipTypeID = id
         parse.shipTypeName = m[1]
       else
@@ -576,14 +576,14 @@ Desc.ParseEFT = (fitting) ->
     else if (m = emptySlotRegex.exec(l)) != null
       moduleCount++
     else if (m = droneRegex.exec(l)) != null
-      if id = lookupDrone m[1]
+      if id = InvTypes.lookupDrone m[1]
         parse.loadout.drones.push({typeID: id, typeName: m[1], quantity: m[2]})
-      else if id = lookupCharge m[1]
+      else if id = InvTypes.lookupCharge m[1]
         parse.loadout.charges.push({typeID: id, typeName: m[1], quantity: m[2]})
     else if (m = moduleRegex.exec(l)) != null
-      if idModule = lookupModule m[1]
+      if idModule = InvTypes.lookupModule m[1]
         if m[3]?
-          if idCharge = lookupCharge m[3]
+          if idCharge = InvTypes.lookupCharge m[3]
             racks[currentRack].push
               typeID: idModule
               typeName: m[1]
@@ -598,7 +598,7 @@ Desc.ParseEFT = (fitting) ->
             typeID: idModule
             typeName: m[1]
           moduleCount++
-      else if idImp = lookupImplant m[1]
+      else if idImp = InvTypes.lookupImplant m[1]
         parse.loadout.implants.push {typeID: idImp, typeName: m[1]}
 
   [parse.loadout.lows, parse.loadout.mids, parse.loadout.highs, parse.loadout.rigs, parse.loadout.subs] = racks

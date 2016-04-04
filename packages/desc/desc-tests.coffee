@@ -151,8 +151,8 @@ Tinytest.add 'desc cloak', (test) ->
 Tinytest.add 'desc MJFG', (test) ->
   fit = new DescFitting()
 
-  fit.setShip lookupShip "Stork" 
-  fit.addModule lookupModule "Micro Jump Field Generator"
+  fit.setShip InvTypes.lookupShip "Stork" 
+  fit.addModule InvTypes.lookupModule "Micro Jump Field Generator"
 
   nav = fit.getNavigation()
 
@@ -284,9 +284,9 @@ Tinytest.add 'desc ewar', (test) ->
   fit.setShip TYPE_SCIMITAR
   fit.addModule TYPE_STASISWEBII
   fit.addModule TYPE_PHASEDWEAPONTP
-  fit.addModule lookupModule 'Warp Disruptor II'
-  fit.addModule lookupModule 'Warp Scrambler II'
-  fit.addModule lookupModule 'Remote Sensor Dampener II'
+  fit.addModule InvTypes.lookupModule 'Warp Disruptor II'
+  fit.addModule InvTypes.lookupModule 'Warp Scrambler II'
+  fit.addModule InvTypes.lookupModule 'Remote Sensor Dampener II'
 
   ewarStats = fit.getEwar()
   test.equal ewarStats.webs[0].strength, 0.6
@@ -443,11 +443,11 @@ Warrior I x9"""
 
 Tinytest.add 'desc info links and ecm', (test) ->
   fit = new DescFitting
-  fit.setShip lookupShip 'Griffin'
-  fit.addModule lookupModule 'Enfeebling Phase Inversion ECM I'
-  fit.addModule lookupModule 'Small Particle Dispersion Projector I'
-  fit.addModule lookupModule 'Small Particle Dispersion Projector I'
-  fit.addModule lookupModule 'Small Particle Dispersion Projector I'
+  fit.setShip InvTypes.lookupShip 'Griffin'
+  fit.addModule InvTypes.lookupModule 'Enfeebling Phase Inversion ECM I'
+  fit.addModule InvTypes.lookupModule 'Small Particle Dispersion Projector I'
+  fit.addModule InvTypes.lookupModule 'Small Particle Dispersion Projector I'
+  fit.addModule InvTypes.lookupModule 'Small Particle Dispersion Projector I'
 
   fleet = new DescFleet()
   fleet.setFleetCommander Desc.getInformationLinks()
