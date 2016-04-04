@@ -5,7 +5,7 @@ Router.route '/api/:slug', ->
   doctrines = Doctrines.find slug: {$in: slugs}
   dnas = []
   for d in doctrines.fetch()
-    fittings = Fittings.find {_id: {$in: d.fittings}}, {sort: {typeName: 1, name: 1}}
+    fittings = Fittings.find {_id: {$in: d.fittings},public: true}, {sort: {typeName: 1, name: 1}}
 
     loadout = (f) ->
       l = []
