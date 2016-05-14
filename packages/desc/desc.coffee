@@ -499,9 +499,9 @@ class DescFitting
     return result
 
   getTargeting: () ->
-    attr = @getShipAttributes [@ATTR_TARGETS, @ATTR_SCANRES]
+    attr = @getShipAttributes [@ATTR_TARGETS, @ATTR_SCANRES, @ATTR_LOCKRANGE]
     targeting = {}
-    #targeting.range = attr[@ATTR_LOCKRANGE]
+    targeting.range = attr[@ATTR_LOCKRANGE]
     targeting.scanres = attr[@ATTR_SCANRES]
     targeting.targets = attr[@ATTR_TARGETS]
 
