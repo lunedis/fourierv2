@@ -1,16 +1,49 @@
 <template name="loadout">
-<div class="loadout">
-	<p class="h3 text-center">Loadout</p>
-	<div class="racks">
-		{{>rack name="HIGH" modules=highs}}
-		{{>rack name="MID" modules=mids}}
-		{{>rack name="LOW" modules=lows}}
-		{{>rack name="RIG" modules=rigs}}
-		{{>rackSmall name="SUBS" modules=subs}}
-		{{>rackSmall name="DRNS" modules=drones}}
-		{{>rackSmall name="CRG" modules=charges}}
+<div class="tabpanel">
+	<ul class="nav nav-tabs" role="tablist">
+		{{>loadoutTab id=_id href="loadout" icon="th" title="Loadout" class="active"}}
+		{{>loadoutTab id=_id href="loadouteft" icon="list" title="EFT"}}
+		{{>loadoutTab id=_id href="loadoutdna" icon="barcode" title="DNA"}}
+	</ul>
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane active" id="loadout{{_id}}">
+			<div class="racks">
+				{{#with loadout}}
+					{{>rack name="HIGH" modules=highs}}
+					{{>rack name="MID" modules=mids}}
+					{{>rack name="LOW" modules=lows}}
+					{{>rack name="RIG" modules=rigs}}
+					{{>rackSmall name="SUBS" modules=subs}}
+					{{>rackSmall name="DRNS" modules=drones}}
+					{{>rackSmall name="CRG" modules=charges}}
+				{{/with}}
+			</div>
+		</div>
+		<div role="tabpanel" class="tab-pane" id="loadouteft{{_id}}">
+			{{>eft}}
+		</div>
+		<div role="tabpanel" class="tab-pane" id="loadoutdna{{_id}}">
+			{{>dna}}
+		</div>
 	</div>
 </div>
+</template>
+
+<template name="loadoutTab">
+<li role="presentation" class="{{class}}">
+	<a href="#{{href}}{{id}}" aria-controls="{{href}}{{id}}" role="tab" data-toggle="tab">
+		
+			{{#if color}}
+				<span style="color: {{color}};">
+					<span class="glyphicon glyphicon-{{icon}}" aria-hidden="true"></span>
+					{{title}}
+				</span>
+			{{else}}
+				<span class="glyphicon glyphicon-{{icon}}" aria-hidden="true"></span>
+				{{title}}
+			{{/if}}
+	</a>
+</li>
 </template>
 
 <template name="rack">
@@ -51,3 +84,7 @@
 </template>
 
 <template name="eftModule">{{typeName}}{{#if chargeName}}, {{chargeName}}{{/if}}</template>
+
+<template name="dna">
+<pre class="eft">{{shipTypeID}}{{#with loadout}}{{#each subs}}:{{typeID}}{{/each}}{{#each highs}}:{{typeID}};1{{/each}}{{#each mids}}:{{typeID}};1{{/each}}{{#each lows}}:{{typeID}};1{{/each}}{{#each rigs}}:{{typeID}};1{{/each}}{{#each drones}}:{{typeID}};{{quantity}}{{/each}}{{#each charges}}:{{typeID}};{{quantity}}{{/each}}{{/with}}</pre>
+</template>

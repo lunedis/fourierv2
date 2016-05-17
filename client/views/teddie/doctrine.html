@@ -70,7 +70,6 @@
 				{{#if fittingDoctor}}
 					{{>tab id=_id href="fittingdoctor" icon="cog" title="Fitting Doctor"}}
 				{{/if}}
-				{{>tab id=_id href="eft" icon="list" title="EFT"}}
 			</ul>
 			<div class="tab-content">
 				<div role="tabpanel" class="tab-pane active" id="info{{_id}}">
@@ -87,9 +86,7 @@
 						{{/ifEmpty}}
 						</span>
 					</p>
-					{{#with loadout}}
-						{{>loadout}}
-					{{/with}}
+					{{>loadout}}
 				</div>
 				<div role="tabpanel" class="tab-pane" id="stats{{_id}}">
 					{{>stats}}
@@ -102,10 +99,6 @@
 				</div>
 				<div role="tabpanel" class="tab-pane" id="fittingdoctor{{_id}}">
 					{{>fittingDoctor}}
-				</div>
-				<div role="tabpanel" class="tab-pane" id="eft{{_id}}">
-					{{>eft}}
-					<pre class="eft">{{>dna}}</pre>
 				</div>
 			</div>
 		</div>
@@ -194,8 +187,4 @@
 
 <template name="ifEmpty">
 	{{#if this}}{{this}}{{else}}{{> Template.contentBlock}}{{/if}}
-</template>
-
-<template name="dna">
-{{shipTypeID}}{{#with loadout}}{{#each subs}}:{{typeID}}{{/each}}{{#each highs}}:{{typeID}};1{{/each}}{{#each mids}}:{{typeID}};1{{/each}}{{#each lows}}:{{typeID}};1{{/each}}{{#each rigs}}:{{typeID}};1{{/each}}{{#each drones}}:{{typeID}};{{quantity}}{{/each}}{{#each charges}}:{{typeID}};{{quantity}}{{/each}}{{/with}}
 </template>
