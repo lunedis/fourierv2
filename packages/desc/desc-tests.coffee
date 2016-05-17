@@ -460,3 +460,7 @@ Tinytest.add 'desc info links and ecm', (test) ->
   roughly test, stats.ecm[0].optimal, 79579, 1
   roughly test, stats.ecm[0].falloff, 48114, 1
   roughly test, stats.ecm[0].strength, 10.5, 0.1 
+
+Tinytest.add 'desc slot detection', (test) ->
+  test.equal Desc.getSlotForModule(TYPE_LARGEREMOTESHIELDBOOSTERII), "Highslot", "Large Remote SB II is a highslot module"
+  test.equal Desc.getSlotForModule(TYPE_10MNAFTERBURNERII), "Medslot", "10MN AB II is a med module"

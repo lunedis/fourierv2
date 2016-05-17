@@ -1,6 +1,25 @@
 Desc.init = ->
   init()
 
+Desc.getSlotForModule = (module) ->
+  # SLOTS
+  EFFECT_HIGHSLOT = 12
+  EFFECT_MEDSLOT = 13
+  EFFECT_LOWSLOT = 11
+  EFFECT_SUBSYSTEM = 3772
+
+
+  if typeHasEffect(module, DOGMA.STATE_Offline, EFFECT_HIGHSLOT)
+    "Highslot"
+  else if typeHasEffect(module, DOGMA.STATE_Offline, EFFECT_MEDSLOT)
+    "Medslot"
+  else if typeHasEffect(module, DOGMA.STATE_Offline, EFFECT_LOWSLOT)
+    "Lowslot"
+  else if typeHasEffect(module, DOGMA.STATE_Offline, EFFECT_SUBSYSTEM)
+    "Subsystem"
+  else 
+    "Charge"
+
 class DescFitting
   constructor: ->
     @dogmaContext = new DogmaContext
