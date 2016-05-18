@@ -40,12 +40,68 @@ descriptionSchema = new SimpleSchema
     optional: true
     autoform:
       rows: 2
-  refits:
-    type: String
-    label: "Refits"
+
+RefitSchemaBase = new SimpleSchema
+  refit:
+    type: Object
+    label: "Refit"
     optional: true
+  'refit.modules':
+    type: Array
+    label: "Modules"
+    optional: true
+  'refit.modules.$':
+    type: Object
+    label: "Module"
+  'refit.modules.$.typeName':
+    type: String
+    label: "TypeName"
+  'refit.modules.$.count':
+    type: Number
+    label: "Count"
+  'refit.modules.$.comment':
+    type: String
+    label: "Comment"
+    optional: true
+  'refit.modules.$.storage':
+    type: String
+    label: "Storage"
+    allowedValues: ["Ship", "Station"]
+  'refit.fittings':
+    type: Array
+    label: "Fittings"
+  'refit.fittings.$':
+    type: Object
+    label: "Fitting"
+  'refit.fittings.$.name':
+    type: String
+    label: "Name"
+  'refit.fittings.$.description':
+    type: String
+    label: "Description"
+    autoform:
+      rows: 2
+
+RefitSchemaFit = new SimpleSchema
+  'refit.fittings.$.eft':
+    type: String
+    label: "EFT"
     autoform:
       rows: 4
+
+RefitSchemaExtended = new SimpleSchema
+  'refit.modules.$.typeID':
+    type: Number
+    label: "typeID"
+  'refit.modules.$.slot':
+    type: String
+    label: "Slot"
+    allowedValues: ["Highslot", "Medslot", "Lowslot", "Subsystem", "Charge"]
+  'refit.fittings.$.loadout':
+    type: Object
+    label: "Loadout"
+    blackbox: true
+
 loadoutSchema = new SimpleSchema
   shipTypeID:
     type: Number
@@ -109,13 +165,16 @@ eftSchemaOptional = new SimpleSchema
         type: 'hidden'
 
 StoreFittingsSchema = new SimpleSchema(
-  [mandatoryDescriptionSchema, descriptionSchema, loadoutSchema])
+  [mandatoryDescriptionSchema, descriptionSchema, 
+  loadoutSchema, RefitSchemaBase, RefitSchemaExtended])
 
 @AddFittingsSchema = new SimpleSchema(
-  [mandatoryDescriptionSchema, eftSchema])
+  [mandatoryDescriptionSchema, eftSchema, 
+  RefitSchemaBase])
 
 @UpdateFittingsSchema = new SimpleSchema(
-  [mandatoryDescriptionSchema, descriptionSchema, eftSchemaOptional])
+  [mandatoryDescriptionSchema, descriptionSchema, 
+  eftSchemaOptional, RefitSchemaBase, RefitSchemaFit])
 
 Fittings.attachSchema StoreFittingsSchema
 
@@ -154,6 +213,26 @@ if Meteor.isServer
       obj.stats = stats
     return obj
 
+  transformRefit = (obj) ->
+    Desc.init()
+
+    for mod in obj['refit.modules']
+      mod.typeID = InvTypes.lookup(mod.typeName).typeID
+      mod.slot = Desc.getSlotForModule(mod.typeID)
+
+    return obj
+
+  transformRefitFits = (obj) ->
+    Desc.init()
+
+    for fit in obj['refit.fittings']
+      console.log fit
+      parse = Desc.ParseEFT fit.eft
+      fit.loadout = parse.loadout
+      delete fit.eft
+
+    return obj
+
   Meteor.methods
     addFitting: (document) ->
       check document, AddFittingsSchema
@@ -176,6 +255,13 @@ if Meteor.isServer
         else
           delete modifier.$set.links
           delete modifier.$unset.eft
+
+        if modifier.$set['refit.modules']?
+          modifier.$set = transformRefit modifier.$set
+
+        if modifier.$set['refit.fittings']?
+          modifier.$set = transformRefitFits modifier.$set
+
         check modifier, StoreFittingsSchema
         Fittings.update documentID, modifier
       else

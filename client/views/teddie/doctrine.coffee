@@ -57,3 +57,14 @@ Template.fit.helpers
       return 'label-warning'
     else
       return 'label-info'
+
+Template.refit.helpers
+  groupedModules: ->
+    _(@refit.modules).chain().sortBy('typeName').groupBy('slot').value()
+  refitFittings: ->
+    ship = this
+    for f in @refit.fittings
+      f.shipTypeID = ship.shipTypeID
+      f.shipTypeName = ship.shipTypeName
+      f.name = ship.name
+    return @refit.fittings

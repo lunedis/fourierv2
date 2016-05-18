@@ -60,8 +60,8 @@
 		<div class="tabpanel">
 			<ul class="nav nav-tabs" role="tablist">
 				{{>tab id=_id href="info" icon="info-sign" title="Info" class="active"}}
-				{{#if refits}}
-					{{>tab id=_id href="refits" icon="refresh" title="Refits" color="#FF3333"}}
+				{{#if refit}}
+					{{>tab id=_id href="refit" icon="refresh" title="Refits" color="#FF3333"}}
 				{{/if}}
 				{{>tab id=_id href="stats" icon="signal" title="Stats"}}
 				{{#if tips}}
@@ -86,13 +86,13 @@
 						{{/ifEmpty}}
 						</span>
 					</p>
-					{{>loadout}}
+					{{>loadout name=name shipTypeID=shipTypeID shipTypeName=shipTypeName loadout=loadout}}
 				</div>
 				<div role="tabpanel" class="tab-pane" id="stats{{_id}}">
 					{{>stats}}
 				</div>
-				<div role="tabpanel" class="tab-pane" id="refits{{_id}}">
-					{{>refits}}	
+				<div role="tabpanel" class="tab-pane" id="refit{{_id}}">
+					{{>refit}}	
 				</div>
 				<div role="tabpanel" class="tab-pane" id="tips{{_id}}">
 					{{>tips}}	
@@ -173,8 +173,48 @@
 </table>		
 </template>
 
-<template name="refits">
-{{#markdown}}{{#ifEmpty refits}}*not available*{{/ifEmpty}}{{/markdown}}	 
+<template name="refit">
+{{#with groupedModules}}
+	<h4>Highslots:</h4>
+	{{>refitRack Highslot}}
+	<h4>Medslots:</h4>
+	{{>refitRack Medslot}}
+	<h4>Lowslots:</h4>
+	{{>refitRack Lowslot}}
+	<h4>Charges:</h4>
+	{{>refitRack Charge}}
+{{/with}}
+{{#each refitFittings}}
+	<h3>{{name}}</h3>
+	<p>{{#markdown}}{{description}}{{/markdown}}</p>
+	{{log}}
+	{{>loadout}}
+{{/each}}
+</template>
+
+<template name="refitRack">
+{{#if this}}
+	<table class="table table-condensed table-bordered">
+		<tbody>
+			{{#each this}}
+				{{>refitModule}}
+			{{/each}}
+		</tbody>
+		</table>
+{{else}}
+	<p>-</p>
+{{/if}}
+</template>
+
+<template name="refitModule">
+<tr>
+	<td width="32">
+		<img style="" src="https://image.eveonline.com/Type/{{typeID}}_32.png">
+	</td>
+	<td>{{count}}x {{typeName}}</td>
+	<td>{{#markdown}}{{comment}}{{/markdown}}</td>
+	<td width="100">{{storage}}</td>
+</tr>
 </template>
 
 <template name="tips">
@@ -187,4 +227,8 @@
 
 <template name="ifEmpty">
 	{{#if this}}{{this}}{{else}}{{> Template.contentBlock}}{{/if}}
+</template>
+
+<template name="ifNotEmpty">
+{{#if this}}{{> Template.contentBlock}}{{else}}<p>-</p>{{/if}}
 </template>
