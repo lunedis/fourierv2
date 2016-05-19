@@ -58,8 +58,11 @@ Template.fit.helpers
     else
       return 'label-info'
 
-  refitEmpty: ->
-    return refit? or refit == {}
+  refitNotEmpty: ->
+    if refit?
+      return refit != {}
+    else
+      return false
 
 Template.refit.helpers
   groupedModules: ->
