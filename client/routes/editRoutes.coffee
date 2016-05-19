@@ -38,6 +38,13 @@ Router.route 'fitting/edit/:_id',
       data: ->
         if !@ready
           return
-        Fittings.findOne _id: @params._id
+        fit = Fittings.findOne _id: @params._id
+        for refit in fit.refit.fittings
+          refit.eft = getEFT(
+            shipTypeName: fit.shipTypeName
+            name: refit.name
+            loadout: refit.loadout)
+        console.log fit
+        return fit
   waitOn: ->
     [Meteor.subscribe('allDoctrines'), Meteor.subscribe('allFittings')]

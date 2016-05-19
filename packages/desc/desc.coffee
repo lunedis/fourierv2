@@ -1,6 +1,25 @@
 Desc.init = ->
   init()
 
+Desc.getSlotForModule = (module) ->
+  # SLOTS
+  EFFECT_HIGHSLOT = 12
+  EFFECT_MEDSLOT = 13
+  EFFECT_LOWSLOT = 11
+  EFFECT_SUBSYSTEM = 3772
+
+
+  if typeHasEffect(module, DOGMA.STATE_Offline, EFFECT_HIGHSLOT)
+    "Highslot"
+  else if typeHasEffect(module, DOGMA.STATE_Offline, EFFECT_MEDSLOT)
+    "Medslot"
+  else if typeHasEffect(module, DOGMA.STATE_Offline, EFFECT_LOWSLOT)
+    "Lowslot"
+  else if typeHasEffect(module, DOGMA.STATE_Offline, EFFECT_SUBSYSTEM)
+    "Subsystem"
+  else 
+    "Charge"
+
 class DescFitting
   constructor: ->
     @dogmaContext = new DogmaContext
@@ -499,9 +518,9 @@ class DescFitting
     return result
 
   getTargeting: () ->
-    attr = @getShipAttributes [@ATTR_TARGETS, @ATTR_SCANRES]
+    attr = @getShipAttributes [@ATTR_TARGETS, @ATTR_SCANRES, @ATTR_LOCKRANGE]
     targeting = {}
-    #targeting.range = attr[@ATTR_LOCKRANGE]
+    targeting.range = attr[@ATTR_LOCKRANGE]
     targeting.scanres = attr[@ATTR_SCANRES]
     targeting.targets = attr[@ATTR_TARGETS]
 

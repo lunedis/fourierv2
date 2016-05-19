@@ -411,7 +411,7 @@ Damage Control II
 Energized Adaptive Nano Membrane II
 
 1MN Monopropellant Enduring Afterburner
-Alumel-Wired Sensor Augmentation, Targeting Range Script
+Sensor Booster II, Targeting Range Script
 Tracking Disruptor II, Optimal Range Disruption Script
 Tracking Disruptor II, Optimal Range Disruption Script
 
@@ -432,7 +432,8 @@ Warrior I x9"""
   fleet.addFit fit
 
   stats = fit.getStats()
-  roughly test, stats.targeting.range, 180000, 1000
+  console.log stats.targeting
+  roughly test, stats.targeting.range, 183000, 1000, "Targeting range should be 183000"
   roughly test, stats.targeting.strength, 25.1, 0.1
   roughly test, stats.targeting.scanres, 743, 1
   roughly test, stats.targeting.targets, 6, 1
@@ -459,3 +460,7 @@ Tinytest.add 'desc info links and ecm', (test) ->
   roughly test, stats.ecm[0].optimal, 79579, 1
   roughly test, stats.ecm[0].falloff, 48114, 1
   roughly test, stats.ecm[0].strength, 10.5, 0.1 
+
+Tinytest.add 'desc slot detection', (test) ->
+  test.equal Desc.getSlotForModule(TYPE_LARGEREMOTESHIELDBOOSTERII), "Highslot", "Large Remote SB II is a highslot module"
+  test.equal Desc.getSlotForModule(TYPE_10MNAFTERBURNERII), "Medslot", "10MN AB II is a med module"

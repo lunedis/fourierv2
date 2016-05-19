@@ -1,16 +1,48 @@
 <template name="loadout">
-<div class="loadout">
-	<p class="h3 text-center">Loadout</p>
-	<div class="racks">
-		{{>rack name="HIGH" modules=highs}}
-		{{>rack name="MID" modules=mids}}
-		{{>rack name="LOW" modules=lows}}
-		{{>rack name="RIG" modules=rigs}}
-		{{>rackSmall name="SUBS" modules=subs}}
-		{{>rackSmall name="DRNS" modules=drones}}
-		{{>rackSmall name="CRG" modules=charges}}
+<div class="tabpanel">
+	<ul class="nav nav-tabs">
+		{{>loadoutTab icon="th" title="Loadout" class="active"}}
+		{{>loadoutTab icon="list" title="EFT"}}
+		{{>loadoutTab icon="barcode" title="DNA"}}
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane active">
+			<div class="racks">
+				{{#with loadout}}
+					{{>rack name="HIGH" modules=highs}}
+					{{>rack name="MID" modules=mids}}
+					{{>rack name="LOW" modules=lows}}
+					{{>rack name="RIG" modules=rigs}}
+					{{>rackSmall name="SUBS" modules=subs}}
+					{{>rackSmall name="DRNS" modules=drones}}
+					{{>rackSmall name="CRG" modules=charges}}
+				{{/with}}
+			</div>
+		</div>
+		<div class="tab-pane">
+			{{>eft}}
+		</div>
+		<div class="tab-pane">
+			{{>dna}}
+		</div>
 	</div>
 </div>
+</template>
+
+<template name="loadoutTab">
+<li class="{{class}}">
+	<a href="#">
+			{{#if color}}
+				<span style="color: {{color}};">
+					<span class="glyphicon glyphicon-{{icon}}" aria-hidden="true"></span>
+					{{title}}
+				</span>
+			{{else}}
+				<span class="glyphicon glyphicon-{{icon}}" aria-hidden="true"></span>
+				{{title}}
+			{{/if}}
+	</a>
+</li>
 </template>
 
 <template name="rack">
@@ -47,7 +79,13 @@
 {{typeName}} x{{quantity}}{{/each}}
 {{#each charges}}
 {{typeName}} x{{quantity}}{{/each}}{{/with}}
+{{#if refit}}{{#with refit}}{{#each modules}}
+{{typeName}} x{{count}}{{/each}}{{/with}}{{/if}}
 </pre>
 </template>
 
 <template name="eftModule">{{typeName}}{{#if chargeName}}, {{chargeName}}{{/if}}</template>
+
+<template name="dna">
+<pre class="eft">{{shipTypeID}}{{#with loadout}}{{#each subs}}:{{typeID}}{{/each}}{{#each highs}}:{{typeID}};1{{/each}}{{#each mids}}:{{typeID}};1{{/each}}{{#each lows}}:{{typeID}};1{{/each}}{{#each rigs}}:{{typeID}};1{{/each}}{{#each drones}}:{{typeID}};{{quantity}}{{/each}}{{#each charges}}:{{typeID}};{{quantity}}{{/each}}{{/with}}</pre>
+</template>
