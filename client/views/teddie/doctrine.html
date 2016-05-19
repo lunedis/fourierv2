@@ -61,7 +61,7 @@
 			<ul class="nav nav-tabs" role="tablist">
 				{{>tab id=_id href="info" icon="info-sign" title="Info" class="active"}}
 
-				{{#if refitEmpty}}
+				{{#if refitNotEmpty}}
 					{{>tab icon="refresh" title="Refit" color="#FF3333"}}
 				{{/if}}
 
@@ -97,7 +97,7 @@
 					{{>loadout}}
 				</div>
 
-				{{#if refitEmpty}}
+				{{#if refitNotEmpty}}
 					<div class="tab-pane">
 						{{>refit}}	
 					</div>
