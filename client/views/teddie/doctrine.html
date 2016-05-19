@@ -61,18 +61,21 @@
 			<ul class="nav nav-tabs" role="tablist">
 				{{>tab id=_id href="info" icon="info-sign" title="Info" class="active"}}
 				{{#if refit}}
-					{{>tab id=_id href="refit" icon="refresh" title="Refits" color="#FF3333"}}
+					{{>tab icon="refresh" title="Refit" color="#FF3333"}}
 				{{/if}}
-				{{>tab id=_id href="stats" icon="signal" title="Stats"}}
+				{{#if refits}}
+					{{>tab icon="refresh" title="Refits" color="#FF3333"}}
+				{{/if}}
+				{{>tab icon="signal" title="Stats"}}
 				{{#if tips}}
-					{{>tab id=_id href="tips" icon="question-sign" title="Tips"}}
+					{{>tab icon="question-sign" title="Tips"}}
 				{{/if}}
 				{{#if fittingDoctor}}
-					{{>tab id=_id href="fittingdoctor" icon="cog" title="Fitting Doctor"}}
+					{{>tab icon="cog" title="Fitting Doctor"}}
 				{{/if}}
 			</ul>
 			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane active" id="info{{_id}}">
+				<div class="tab-pane active">
 					<p>{{#markdown}}{{#ifEmpty description}}*not available*{{/ifEmpty}}{{/markdown}}</p>
 					<p>
 						Priority: <span class="label {{difficultyLabelColor}}">{{#ifEmpty priority}}
@@ -86,18 +89,23 @@
 						{{/ifEmpty}}
 						</span>
 					</p>
-					{{>loadout name=name shipTypeID=shipTypeID shipTypeName=shipTypeName loadout=loadout}}
+					{{>loadout}}
 				</div>
-				<div role="tabpanel" class="tab-pane" id="stats{{_id}}">
-					{{>stats}}
-				</div>
-				<div role="tabpanel" class="tab-pane" id="refit{{_id}}">
+				<div class="tab-pane">
 					{{>refit}}	
 				</div>
-				<div role="tabpanel" class="tab-pane" id="tips{{_id}}">
+				{{#if refits}}
+				<div class="tab-pane">
+					{{>refits}}	
+				</div>
+				{{/if}}
+				<div class="tab-pane">
+					{{>stats}}
+				</div>
+				<div class="tab-pane">
 					{{>tips}}	
 				</div>
-				<div role="tabpanel" class="tab-pane" id="fittingdoctor{{_id}}">
+				<div class="tab-pane">
 					{{>fittingDoctor}}
 				</div>
 			</div>
@@ -107,9 +115,8 @@
 </template>
 
 <template name="tab">
-<li role="presentation" class="{{class}}">
-	<a href="#{{href}}{{id}}" aria-controls="{{href}}{{id}}" role="tab" data-toggle="tab">
-		
+<li class="{{class}}">
+	<a href="#">
 			{{#if color}}
 				<span style="color: {{color}};">
 					<span class="glyphicon glyphicon-{{icon}}" aria-hidden="true"></span>
@@ -173,19 +180,25 @@
 </table>		
 </template>
 
+<template name="refits">
+{{#markdown}}{{#ifEmpty refits}}*not available*{{/ifEmpty}}{{/markdown}}
+</template>
+
 <template name="refit">
+<h3>Modules:</h3>
 {{#with groupedModules}}
-	<h4>Highslots:</h4>
+	<h5>Highslots:</h5>
 	{{>refitRack Highslot}}
-	<h4>Medslots:</h4>
+	<h5>Medslots:</h5>
 	{{>refitRack Medslot}}
-	<h4>Lowslots:</h4>
+	<h5>Lowslots:</h5>
 	{{>refitRack Lowslot}}
-	<h4>Charges:</h4>
+	<h5>Charges:</h5>
 	{{>refitRack Charge}}
 {{/with}}
+<h3>Fittings:</h3>
 {{#each refitFittings}}
-	<h3>{{name}}</h3>
+	<h4>{{name}}</h4>
 	<p>{{#markdown}}{{description}}{{/markdown}}</p>
 	{{log}}
 	{{>loadout}}

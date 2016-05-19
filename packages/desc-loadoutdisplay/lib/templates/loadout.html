@@ -1,12 +1,12 @@
 <template name="loadout">
 <div class="tabpanel">
-	<ul class="nav nav-tabs" role="tablist">
-		{{>loadoutTab id=_id href="loadout" icon="th" title="Loadout" class="active"}}
-		{{>loadoutTab id=_id href="loadouteft" icon="list" title="EFT"}}
-		{{>loadoutTab id=_id href="loadoutdna" icon="barcode" title="DNA"}}
+	<ul class="nav nav-tabs">
+		{{>loadoutTab icon="th" title="Loadout" class="active"}}
+		{{>loadoutTab icon="list" title="EFT"}}
+		{{>loadoutTab icon="barcode" title="DNA"}}
 	</ul>
 	<div class="tab-content">
-		<div role="tabpanel" class="tab-pane active" id="loadout{{_id}}">
+		<div class="tab-pane active">
 			<div class="racks">
 				{{#with loadout}}
 					{{>rack name="HIGH" modules=highs}}
@@ -19,10 +19,10 @@
 				{{/with}}
 			</div>
 		</div>
-		<div role="tabpanel" class="tab-pane" id="loadouteft{{_id}}">
+		<div class="tab-pane">
 			{{>eft}}
 		</div>
-		<div role="tabpanel" class="tab-pane" id="loadoutdna{{_id}}">
+		<div class="tab-pane">
 			{{>dna}}
 		</div>
 	</div>
@@ -30,9 +30,8 @@
 </template>
 
 <template name="loadoutTab">
-<li role="presentation" class="{{class}}">
-	<a href="#{{href}}{{id}}" aria-controls="{{href}}{{id}}" role="tab" data-toggle="tab">
-		
+<li class="{{class}}">
+	<a href="#">
 			{{#if color}}
 				<span style="color: {{color}};">
 					<span class="glyphicon glyphicon-{{icon}}" aria-hidden="true"></span>
@@ -80,6 +79,8 @@
 {{typeName}} x{{quantity}}{{/each}}
 {{#each charges}}
 {{typeName}} x{{quantity}}{{/each}}{{/with}}
+{{#if refit}}{{#with refit}}{{#each modules}}
+{{typeName}} x{{count}}{{/each}}{{/with}}{{/if}}
 </pre>
 </template>
 

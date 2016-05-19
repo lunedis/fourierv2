@@ -25,4 +25,18 @@ Meteor.startup(function() {
 			SelectText(event.target);
 		}
 	});
+
+	Template['loadout'].rendered = function() {
+		$('.tabpanel .nav-tabs').on('click', 'a', function(e){
+			var tab  = $(this).parent(),
+				tabIndex = tab.index(),
+				tabContent = $(this).closest('.tabpanel').children('.tab-content').first(),
+				tabPane = tabContent.children('.tab-pane').eq(tabIndex);
+
+			tabContent.children('.active').removeClass('active');
+			tab.siblings('.active').removeClass('active');
+			tab.addClass('active');
+			tabPane.addClass('active');
+		});
+	}
 });

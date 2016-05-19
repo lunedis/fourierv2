@@ -40,6 +40,12 @@ descriptionSchema = new SimpleSchema
     optional: true
     autoform:
       rows: 2
+  refits:
+    type: String
+    label: "Refits"
+    optional: true
+    autoform:
+      rows: 5
 
 RefitSchemaBase = new SimpleSchema
   refit:
@@ -86,6 +92,7 @@ RefitSchemaFit = new SimpleSchema
   'refit.fittings.$.eft':
     type: String
     label: "EFT"
+    optional: true
     autoform:
       rows: 4
 
@@ -178,6 +185,40 @@ StoreFittingsSchema = new SimpleSchema(
 
 Fittings.attachSchema StoreFittingsSchema
 
+@getEFT = (fit) ->
+  eftModule = (module) ->
+    s = module.typeName
+    if module.chargeName?
+      s += ", " + module.chargeName
+    s += "\n"
+    return s
+  eftCharge = (charge) ->
+    return charge.typeName + " x" + charge.quantity + "\n"
+
+  eft = "[#{fit.shipTypeName}, #{fit.name}]\n"
+  for m in fit.loadout.lows
+    eft += eftModule(m) 
+  eft += "\n" 
+  for m in fit.loadout.mids
+    eft += eftModule(m) 
+  eft += "\n" 
+  for m in fit.loadout.highs
+    eft += eftModule(m) 
+  eft += "\n" 
+  for m in fit.loadout.rigs
+    eft += eftModule(m) 
+  eft += "\n" 
+  for m in fit.loadout.subs
+    eft += eftModule(m) 
+  eft += "\n" 
+  for m in fit.loadout.drones
+    eft += eftCharge(m) 
+  eft += "\n" 
+  for m in fit.loadout.charges
+    eft += eftCharge(m) 
+
+  return eft
+
 if Meteor.isServer
   Fittings.allow
     insert: ->
@@ -222,16 +263,12 @@ if Meteor.isServer
 
     return obj
 
-  transformRefitFits = (obj) ->
-    Desc.init()
+  transformRefitFit = (fit) ->
+    parse = Desc.ParseEFT fit.eft
+    fit.loadout = parse.loadout
+    delete fit.eft
 
-    for fit in obj['refit.fittings']
-      console.log fit
-      parse = Desc.ParseEFT fit.eft
-      fit.loadout = parse.loadout
-      delete fit.eft
-
-    return obj
+    return fit
 
   Meteor.methods
     addFitting: (document) ->
@@ -260,46 +297,15 @@ if Meteor.isServer
           modifier.$set = transformRefit modifier.$set
 
         if modifier.$set['refit.fittings']?
-          modifier.$set = transformRefitFits modifier.$set
+          for fit in modifier.$set['refit.fittings']
+            if fit.eft?
+              fit = transformRefitFit fit
 
         check modifier, StoreFittingsSchema
         Fittings.update documentID, modifier
       else
         throw new Meteor.Error 403, 'No Permissions'
 
-  getEFT = (fit) ->
-    eftModule = (module) ->
-      s = module.typeName
-      if module.chargeName?
-        s += ", " + module.chargeName
-      s += "\n"
-      return s
-    eftCharge = (charge) ->
-      return charge.typeName + " x" + charge.quantity + "\n"
-
-    eft = "[#{fit.shipTypeName}, #{fit.name}]\n"
-    for m in fit.loadout.lows
-      eft += eftModule(m) 
-    eft += "\n" 
-    for m in fit.loadout.mids
-      eft += eftModule(m) 
-    eft += "\n" 
-    for m in fit.loadout.highs
-      eft += eftModule(m) 
-    eft += "\n" 
-    for m in fit.loadout.rigs
-      eft += eftModule(m) 
-    eft += "\n" 
-    for m in fit.loadout.subs
-      eft += eftModule(m) 
-    eft += "\n" 
-    for m in fit.loadout.drones
-      eft += eftCharge(m) 
-    eft += "\n" 
-    for m in fit.loadout.charges
-      eft += eftCharge(m) 
-
-    return eft
   @RecalculateStats = ->
     fits = Fittings.find().fetch()
     _.each fits, (fit) ->

@@ -66,5 +66,5 @@ Template.refit.helpers
     for f in @refit.fittings
       f.shipTypeID = ship.shipTypeID
       f.shipTypeName = ship.shipTypeName
-      f.name = ship.name
+      #f.name = ship.name + " Refit"
     return @refit.fittings
