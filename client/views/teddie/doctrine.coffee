@@ -59,8 +59,8 @@ Template.fit.helpers
       return 'label-info'
 
   refitNotEmpty: ->
-    if refit?
-      return refit != {}
+    if @refit?
+      return @refit != {}
     else
       return false
 
