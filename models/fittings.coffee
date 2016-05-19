@@ -176,8 +176,7 @@ StoreFittingsSchema = new SimpleSchema(
   loadoutSchema, RefitSchemaBase, RefitSchemaExtended])
 
 @AddFittingsSchema = new SimpleSchema(
-  [mandatoryDescriptionSchema, eftSchema, 
-  RefitSchemaBase])
+  [mandatoryDescriptionSchema, eftSchema])
 
 @UpdateFittingsSchema = new SimpleSchema(
   [mandatoryDescriptionSchema, descriptionSchema, 
