@@ -58,13 +58,19 @@ Template.fit.helpers
     else
       return 'label-info'
 
+  refitEmpty: ->
+    return refit? or refit == {}
+
 Template.refit.helpers
   groupedModules: ->
     _(@refit.modules).chain().sortBy('typeName').groupBy('slot').value()
   refitFittings: ->
     ship = this
-    for f in @refit.fittings
-      f.shipTypeID = ship.shipTypeID
-      f.shipTypeName = ship.shipTypeName
-      #f.name = ship.name + " Refit"
-    return @refit.fittings
+    if @refit.fittings?
+      for f in @refit.fittings
+        f.shipTypeID = ship.shipTypeID
+        f.shipTypeName = ship.shipTypeName
+        #f.name = ship.name + " Refit"
+      return @refit.fittings
+    else
+      []

@@ -60,16 +60,21 @@
 		<div class="tabpanel">
 			<ul class="nav nav-tabs" role="tablist">
 				{{>tab id=_id href="info" icon="info-sign" title="Info" class="active"}}
-				{{#if refit}}
+
+				{{#if refitEmpty}}
 					{{>tab icon="refresh" title="Refit" color="#FF3333"}}
 				{{/if}}
+
 				{{#if refits}}
 					{{>tab icon="refresh" title="Refits" color="#FF3333"}}
 				{{/if}}
+
 				{{>tab icon="signal" title="Stats"}}
+
 				{{#if tips}}
 					{{>tab icon="question-sign" title="Tips"}}
 				{{/if}}
+
 				{{#if fittingDoctor}}
 					{{>tab icon="cog" title="Fitting Doctor"}}
 				{{/if}}
@@ -91,13 +96,17 @@
 					</p>
 					{{>loadout}}
 				</div>
-				<div class="tab-pane">
-					{{>refit}}	
-				</div>
+
+				{{#if refitEmpty}}
+					<div class="tab-pane">
+						{{>refit}}	
+					</div>
+				{{/if}}
+
 				{{#if refits}}
-				<div class="tab-pane">
-					{{>refits}}	
-				</div>
+					<div class="tab-pane">
+						{{>refits}}	
+					</div>
 				{{/if}}
 				<div class="tab-pane">
 					{{>stats}}
