@@ -92,7 +92,6 @@ RefitSchemaFit = new SimpleSchema
   'refit.fittings.$.eft':
     type: String
     label: "EFT"
-    optional: true
     autoform:
       rows: 4
 
