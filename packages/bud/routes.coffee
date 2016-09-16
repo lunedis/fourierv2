@@ -26,7 +26,7 @@ commands['!thera'] = (text) ->
     else if systems.length == 1
       from = systems[0]
   else
-    from = MapSolarSystems.complete('PR-')[0]
+    from = MapSolarSystems.complete('Litom')[0]
 
   closest = closestTheraHole(from.solarSystemID)
 
