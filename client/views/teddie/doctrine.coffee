@@ -38,18 +38,8 @@ Template.d.helpers
     grouped = _.groupBy fittings, 'role'
 
     return groupByRole fittings
-    
-Template.fit.helpers
-  difficultyLabelColor: ->
-    if @priority == 'high'
-      'label-danger'
-    else if @priority == 'low'
-      'label-success'
-    else if @priority == 'medium'
-      'label-warning'
-    else
-      'label-info'
 
+Template.fit.helpers    
   roleLabelColor: ->
     if @role == 'DPS'
       return 'label-danger'

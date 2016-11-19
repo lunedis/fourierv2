@@ -45,7 +45,6 @@ Router.route 'fitting/edit/:_id',
               shipTypeName: fit.shipTypeName
               name: refit.name
               loadout: refit.loadout)
-        console.log fit
         return fit
   waitOn: ->
     [Meteor.subscribe('allDoctrines'), Meteor.subscribe('allFittings')]

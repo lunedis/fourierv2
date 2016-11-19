@@ -81,19 +81,7 @@
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane active">
-					<p>{{#markdown}}{{#ifEmpty description}}*not available*{{/ifEmpty}}{{/markdown}}</p>
-					<p>
-						Priority: <span class="label {{difficultyLabelColor}}">{{#ifEmpty priority}}
-							unknown
-						{{/ifEmpty}}
-						</span>
-					</p>
-					<p>
-						Count: <span class="label label-default">{{#ifEmpty count}}
-							unknown
-						{{/ifEmpty}}
-						</span>
-					</p>
+					<p>{{#markdown}}{{description}}{{/markdown}}</p>
 					{{>loadout}}
 				</div>
 
