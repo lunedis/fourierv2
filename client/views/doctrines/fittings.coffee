@@ -1,7 +1,7 @@
 Template.fittings.helpers
   roles: ->
     fitIDs = @fittings
-    fittings = _.sortBy Fittings.find({_id: {$in: fitIDs}}).fetch(), 'shipTypeName'
+    fittings = Fittings.find({_id: {$in: fitIDs},public: true},{sort: {priority: -1, shipTypeName: 1}}).fetch()
     return groupByRole fittings
   AddFittingsSchema: ->
     AddFittingsSchema

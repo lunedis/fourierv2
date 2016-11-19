@@ -20,9 +20,8 @@ descriptionSchema = new SimpleSchema
     autoform:
       rows: 5
   priority:
-    type: String
+    type: Number
     label: "Priority"
-    allowedValues: ["", "high", "medium", "low"]
     optional: true
   count:
     type: String

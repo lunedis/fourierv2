@@ -34,7 +34,7 @@ Template.d.destroyed = ->
 Template.d.helpers
   roles: ->
     fitIDs = @fittings
-    fittings = _.sortBy Fittings.find({_id: {$in: fitIDs},public: true}).fetch(), 'shipTypeName'
+    fittings = Fittings.find({_id: {$in: fitIDs},public: true},{sort: {priority: -1, shipTypeName: 1}}).fetch()
     grouped = _.groupBy fittings, 'role'
 
     return groupByRole fittings
