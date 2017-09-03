@@ -27,7 +27,7 @@
 <template name="fitnav">
 <div class="row" style="margin-top: 20px;">
 	{{#each this}}
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<nav class="fit-nav">
 			<ul class="nav">
 				<li class="role">
@@ -88,12 +88,6 @@
 				{{#if refitNotEmpty}}
 					<div class="tab-pane">
 						{{>refit}}	
-					</div>
-				{{/if}}
-
-				{{#if refits}}
-					<div class="tab-pane">
-						{{>refits}}	
 					</div>
 				{{/if}}
 				<div class="tab-pane">
@@ -190,8 +184,9 @@
 	{{>refitRack Medslot}}
 	<h5>Lowslots:</h5>
 	{{>refitRack Lowslot}}
-	<h5>Charges:</h5>
+	<h5>Else:</h5>
 	{{>refitRack Charge}}
+	{{>refitRack Subsystem}}
 {{/with}}
 <h3>Fittings:</h3>
 {{#each refitFittings}}

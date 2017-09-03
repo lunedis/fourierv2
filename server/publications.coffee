@@ -3,9 +3,8 @@ Meteor.publish null, ->
     @ready()
   else
     Meteor.users.find @userId, fields:
-      keyID: 1
-      vCode: 1
-      authGroup: 1
+      authgroup: 1
+      accountstatus: 1
 
 Meteor.publish 'doctrines', ->
   if not @userId

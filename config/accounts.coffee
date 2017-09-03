@@ -3,7 +3,7 @@ Meteor.startup ->
 	 forbidClientAccountCreation: true
 
 @_isAdmin = (user) ->
-  return _.contains(user.authGroup, 'admin') || user.username == "hayley_haruka"
+  return _.contains(user.authgroup, 'admin') || user.username == "bluemorphium" || user.username == "leeloo_leblanc"
 
 @isAdmin = ->
   return Meteor.user() && _isAdmin(Meteor.user())

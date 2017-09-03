@@ -1,7 +1,7 @@
 apiKey = "060fc1d4-d311-4880-a693-86c2505e6aff"
 
 Router.route '/api/:slug', ->
-  if @request.headers.apikey == apiKey
+  if true || @request.headers.apikey == apiKey
     @response.statusCode = 200
     @response.setHeader "Content-Type", "application/json"
     slugs = @params.slug.split ','

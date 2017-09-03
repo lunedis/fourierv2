@@ -2,11 +2,11 @@ Future = Npm.require 'fibers/future'
 
 
 LDAP_DEFAULTS = 
-  url: 'ldap://lumpy.eu',
-  port: '389',
-  dn: 'ou=People,dc=lumpy,dc=eu',
+  url: 'ldap://localhost',
+  port: '3389',
+  dn: 'ou=pizza',
   createNewUser: true,
-  searchResultsList: ['authGroup','accountStatus','keyID', 'vCode']
+  searchResultsList: ['authgroup','accountstatus']
 
 
 class LDAP
@@ -63,7 +63,7 @@ class LDAP
     username = options.username.toLowerCase()
 
     dn = 'uid=' + username + ',' + @options.dn
-    
+
     # Attempt to bind to ldap server with provided info
     client.bind dn, options.ldapPass, (err) =>
       try
@@ -82,6 +82,7 @@ class LDAP
         if @options.searchResultsList
           for property in @options.searchResultsList
             attributes.push property
+
 
         searchOptions =
           scope: 'sub',

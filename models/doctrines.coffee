@@ -22,12 +22,12 @@ BasicDoctrineSchema = new SimpleSchema
   public:
     type: Boolean
     label: "Public"
-
-AdvancedDoctrineSchema = new SimpleSchema
   links:
     type: String
     label: "Links"
-    allowedValues: ['none', 'kiting', 'armor', 'shield']
+    allowedValues: ['none', 'kiting', 'brawl', 'armor', 'shield']
+
+AdvancedDoctrineSchema = new SimpleSchema
   fittings:
     type: Array
     label: "Fittings"
